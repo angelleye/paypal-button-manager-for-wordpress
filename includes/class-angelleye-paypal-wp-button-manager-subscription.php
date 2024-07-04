@@ -131,7 +131,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @return mixed
 	 * */
 	public function get_button_id( $context='view' ){
-		return $this->get_prop( 'button_id', $context );
+		$this->button_id = $this->get_prop( 'button_id', $context );
+		return $this->button_id;
 	}
 
 	/**

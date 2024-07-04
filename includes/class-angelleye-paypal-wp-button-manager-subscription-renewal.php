@@ -97,9 +97,11 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Renewal{
 		$api->set_body( $paypal_body );
 		$api->set_action('create_order');
 		$payment = $api->submit();
-		print("<pre>");print_r( $payment );print("</pre>");
 
-		// Capture Payment
-		// Update Renewal Date if Capture Success
+		
+		if( $payment->body->status == 'COMPLETED' ){
+			$subscription->update_renew_date();
+			$subscription->save();
+		}
 	}
 }
