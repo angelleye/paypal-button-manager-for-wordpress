@@ -13,16 +13,28 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Renewal{
 		add_action('angelleye_paypal_renew_subscriptions', array( $this, 'renew_subscriptions' ) );
 	}
 
+	/**
+	 * Queries all the subscription that is due for renewal.
+	 * 
+	 * @return void
+	 */
 	public function renew_subscriptions(){
 		global $wpdb;
 
-		$subscriptions = $wpdb->get_col( "SELECT ID FROM {$wpdb->prefix}angelleye_paypal_button_manager_subscriptions WHERE DATE(next_payment_due_date) = '" . strtotime('Y-m-d') . "'" );
+		$subscriptions = $wpdb->get_col( "SELECT ID FROM {$wpdb->prefix}angelleye_paypal_button_manager_subscriptions WHERE status='active' AND DATE(next_payment_due_date) = '" . strtotime('Y-m-d') . "'" );
 
 		foreach( $subscriptions as $subscription_id ){
 			$this->renew_subscription( $subscription_id );
 		}
 	}
 
+	/**
+	 * Renews the subscription
+	 * 
+	 * @param int 	subscription_id 	ID of the subscription needs renewal.
+	 * 
+	 * @return void
+	 */
 	public function renew_subscription( $subscription_id ){
 		$subscription = new Angelleye_Paypal_Wp_Button_Manager_Subscription( $subscription_id );
 		$button_id = $subscription->get_button_id();
@@ -64,7 +76,6 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Renewal{
 		            ),
 		            'payee' => array(
 		                'merchant_id' => $button->get_company_merchant_id(),
-		                // 'email_address' => 'sb-crfvt22010093@business.example.com'
 		            ),
 		        )
 		    ),

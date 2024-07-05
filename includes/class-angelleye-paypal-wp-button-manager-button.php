@@ -17,7 +17,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * Returns if the button is valid or not
      * 
      * @return boolean
-     * */
+     */
     public function is_valid_button(){
         $valid_post_type = ( Angelleye_Paypal_Wp_Button_Manager_Post::$post_type === get_post_type( $this->id ) );
         $valid_post_status = ( 'publish' === get_post_status( $this->id ) );
@@ -30,7 +30,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_company_id( $context='view' ){
         return $this->get_prop( 'wbp_company_id', $context );
     }
@@ -41,7 +41,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_button_type( $context='view' ){
         return $this->get_prop( 'wbp_button_type', $context );
     }
@@ -52,7 +52,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_item_name( $context='view' ){
         return $this->get_prop( 'wbp_product_name', $context );
     }
@@ -63,7 +63,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_item_id( $context='view' ){
         return $this->get_prop( 'wbp_product_id', $context );
     }
@@ -74,7 +74,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_price( $context='view' ){
         return $this->get_prop( 'wbp_item_price', $context );
     }
@@ -85,7 +85,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_currency( $context='view' ){
         return $this->get_prop( 'wbp_item_price_currency', $context );
     }
@@ -96,7 +96,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_layout( $context='view' ){
         return $this->get_prop( 'wbp_button_layout', $context );
     }
@@ -107,7 +107,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_color( $context='view' ){
         return $this->get_prop( 'wbp_button_color', $context );
     }
@@ -118,7 +118,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_shape( $context='view' ){
         return $this->get_prop( 'wbp_button_shape', $context );
     }
@@ -129,7 +129,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_size( $context='view' ){
         return $this->get_prop( 'wbp_button_size', $context );
     }
@@ -140,7 +140,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_height( $context='view' ){
         return $this->get_prop( 'wbp_button_height', $context );
     }
@@ -151,7 +151,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_label( $context='view' ){
         return $this->get_prop( 'wbp_button_label', $context );
     }
@@ -162,7 +162,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_button_tagline( $context='view' ){
         return $this->get_prop( 'wbp_button_tagline', $context );
     }
@@ -173,7 +173,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_shipping_amount( $context='view' ){
         return $this->get_prop( 'wbp_item_shipping_amount', $context );
     }
@@ -184,7 +184,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return mixed
-     * */
+     */
     public function get_tax_rate( $context='view' ){
         return $this->get_prop( 'wbp_item_tax_rate', $context );
     }
@@ -195,7 +195,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_frequency_count( $context='view' ){
         return $this->get_prop( 'wbp_frequency_count', $context );
     }
@@ -206,7 +206,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     public function get_frequency( $context='view' ){
         return $this->get_prop( 'wbp_frequency', $context );
     }
@@ -217,7 +217,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function is_data_fields_hidden( $context='view' ){
         return $this->get_prop( 'wbp_hide_data_fields', $context );
     }
@@ -228,7 +228,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function left_background_color( $context='view' ){
         return $this->get_prop( 'wbp_data_fields_left_background_color', $context );
     }  
@@ -239,7 +239,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function right_background_color( $context='view' ){
         return $this->get_prop( 'wbp_data_fields_right_background_color', $context );
     }  
@@ -250,7 +250,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function left_foreground_color( $context='view' ){
         return $this->get_prop( 'wbp_data_fields_left_foreground_color', $context );
     }
@@ -261,7 +261,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function right_foreground_color( $context='view' ){
         return $this->get_prop( 'wbp_data_fields_right_foreground_color', $context );
     }
@@ -272,7 +272,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return array
-     * */
+     */
     public function get_hide_funding_method( $context='view' ){
         $hidden_methods = $this->get_prop( 'wbp_hide_funding_method', $context );
         if( empty( $hidden_methods ) ){
@@ -288,7 +288,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     private function get_prop( $prop, $context ){
         if( array_key_exists( $prop, $this->data ) && !empty( $this->data[$prop] ) ){
             $value = $this->data[$prop];
@@ -311,7 +311,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * Provides the tax total of the button
      * 
      * @return mixed
-     * */
+     */
     public function get_tax_total(){
         $tax = !empty( $this->get_tax_rate() ) ? $this->get_tax_rate() : 0;
         if( $tax == 0 ){
@@ -334,7 +334,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * Provides the final total of the button including shipping and tax
      * 
      * @return mixed
-     * */
+     */
     public function get_total(){
         $shipping = !empty( $this->get_shipping_amount() ) ? $this->get_shipping_amount() : 0;
         $tax = $this->get_tax_total();
@@ -347,7 +347,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
 
     /**
      * Sets the company information
-     * */
+     */
     private function set_company(){
         if( empty( $this->get_company_id() ) ){
             return false;
@@ -365,7 +365,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
 
     /**
      * Checks if the company information is not set, then allows to set the same
-     * */
+     */
     public function maybe_set_company(){
         if( !isset( $this->data['paypal_company'] ) || empty( $this->data['paypal_company'] ) ){
             $this->set_company();
@@ -376,7 +376,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * Returns if the company is in test mode
      * 
      * @return boolean
-     * */
+     */
     public function is_company_test_mode(){
         $this->maybe_set_company();
         return $this->data['paypal_company']['paypal_mode'] == 'sandbox' ? true : false;
@@ -386,7 +386,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * Returns the merchant id of the company
      * 
      * @return string
-     * */
+     */
     public function get_company_merchant_id(){
         $this->maybe_set_company();
         return $this->data['paypal_company']['paypal_merchant_id'];
@@ -398,7 +398,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function get_hosted_button_id( $context='view' ){
         return $this->get_prop( 'wbp_hosted_button_id', $context );
     }
@@ -409,7 +409,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
      * @param string context context of function i.e. view or edit
      *
      * @return string
-     * */
+     */
     public function get_button_environment( $context='view' ){
         return $this->get_prop( 'wbp_button_environment', $context );
     }

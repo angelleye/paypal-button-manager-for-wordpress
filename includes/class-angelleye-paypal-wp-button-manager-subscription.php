@@ -31,7 +31,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	button_id	Button ID of the subscription
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_button_id( $button_id ){
 		$this->button_id = $button_id;
 		$this->data['button_id'] = $button_id;
@@ -55,7 +55,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	email	email of the subscriber
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_email_address( $email ){
 		$this->email_address = $email;
 		$this->data['email_address'] = $email;
@@ -67,7 +67,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	name	first name of the subscriber
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_first_name( $name ){
 		$this->first_name = $name;
 		$this->data['first_name'] = $name;
@@ -79,7 +79,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	name	last name of the subscriber
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_last_name( $name ){
 		$this->last_name = $name;
 		$this->data['last_name'] = $name;
@@ -91,7 +91,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	payment_source	payment source of the subscription 
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_payment_source( $source ){
 		$this->payment_source = $source;
 		$this->data['payment_source'] = $source;
@@ -103,7 +103,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	vault_id 	vault id of the subscription 
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_vault_id( $vault_id ){
 		$this->vault_id = $vault_id;
 		$this->data['vault_id'] = $vault_id;
@@ -115,7 +115,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * @param string 	status 		status of the subscription 
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function set_status( $status ){
 		if( in_array( $status, self::get_available_statuses() ) ){
 			$this->status = $status;
@@ -124,12 +124,25 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	}
 
 	/**
+	 * Allows to set subscription next due date
+	 * 
+	 * @param string 	next_due_date 		next due date of the subscription 
+	 * 
+	 * @return void
+	 */
+	public function set_next_payment_due_date( $next_due_date ){
+		$this->next_payment_due_date = $next_due_date;
+		$this->data['next_payment_due_date'] = $next_due_date;
+		$this->update_renew_date();
+	}
+
+	/**
 	 * Allows to get the subscription's button id.
 	 * 
 	 * @param string 	context 	context of the data. i.e. view or edit
 	 *
 	 * @return mixed
-	 * */
+	 */
 	public function get_button_id( $context='view' ){
 		$this->button_id = $this->get_prop( 'button_id', $context );
 		return $this->button_id;
@@ -142,7 +155,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 *
 	 * 
 	 * @return mixed
-	 * */
+	 */
 	public function get_user_id( $context='view' ){
 		return $this->get_prop('user_id', $context );
 	}
@@ -166,7 +179,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 *
 	 * 
 	 * @return mixed
-	 * */
+	 */
 	public function get_first_name( $context='view' ){
 		return $this->get_prop('first_name', $context );
 	}
@@ -178,7 +191,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 *
 	 * 
 	 * @return mixed
-	 * */
+	 */
 	public function get_last_name( $context='view' ) {
 		return $this->get_prop('last_name', $context );
 	}
@@ -202,7 +215,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 *
 	 * 
 	 * @return mixed
-	 * */
+	 */
 	public function get_vault_id( $context='view' ){
 		return $this->get_prop('vault_id', $context);
 	}
@@ -214,7 +227,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 *
 	 * 
 	 * @return mixed
-	 * */
+	 */
 	public function get_status( $context='view' ){
 		return $this->get_prop('status', $context);
 	}
@@ -223,17 +236,38 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * Returns the available subscription statuses
 	 * 
 	 * @return array
-	 * */
-	private static function get_available_statuses(){
-		return apply_filters( 'angelleye_paypal_button_manager_subscription_available_statuses', array( 'active', 'onhold', 'cancel' ) );
+	 */
+	public static function get_available_statuses(){
+		return apply_filters( 'angelleye_paypal_button_manager_subscription_available_statuses', array( 'active', 'cancelled' ) );
+	}
+
+	/**
+	 * Returns the available next due date
+	 * 
+	 * @param string 	context 	context of the data. i.e. view or edit
+	 * 
+	 * 
+	 * @return mixed
+	 */
+	public function get_next_due_date( $context='view' ){
+		return $this->get_prop('next_payment_due_date', $context);
+	}
+
+	/**
+	 * Returns the subscription id
+	 *
+	 * @return mixed
+	 */
+	public function get_id( $context='view' ){
+		return $this->subscription_id;
 	}
 
 	/**
 	 * Calculates and returns the next payment due date.
 	 * 
 	 * @return mixed
-	 * */
-	private function get_next_payment_due_date(){
+	 */
+	public function get_next_payment_due_date(){
 		if( empty( $this->button_id ) ){
 			return new WP_Error( 'button-id-not-set', __('Button ID is not set.', 'angelleye-paypal-wp-button-manager') );
 		}
@@ -261,7 +295,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 	 * Sets the flag to update the renew date
 	 * 
 	 * @return void
-	 * */
+	 */
 	public function update_renew_date(){
 		$this->update_renew_date = true;
 	}
@@ -273,7 +307,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
      * @param string context context of function i.e. view or edit
      * 
      * @return mixed
-     * */
+     */
     private function get_prop( $prop, $context ){
         if( array_key_exists( $prop, $this->data ) && !empty( $this->data[$prop] ) ){
             $value = $this->data[$prop];
@@ -299,7 +333,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
      * Saves the updated subscription details or creates the subscription
      * 
      * @return mixed
-     * */
+     */
 	public function save(){
 		global $wpdb;
 		
@@ -346,11 +380,15 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 			$updates = array();
 
 			if( $this->update_renew_date ){
-				$next_due_date = $this->get_next_payment_due_date();
-				if( is_wp_error( $next_due_date ) ){
-					return $next_due_date;
+				if( $this->next_payment_due_date ){
+					$updates['next_payment_due_date'] = $this->next_payment_due_date;
+				} else {
+					$next_due_date = $this->get_next_payment_due_date();
+					if( is_wp_error( $next_due_date ) ){
+						return $next_due_date;
+					}
+					$updates['next_payment_due_date'] = $next_due_date;
 				}
-				$updates['next_payment_due_date'] = $next_due_date;
 			}
 
 			if( !empty( $this->user_id ) ){
@@ -379,5 +417,14 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription{
 		}
 
 		return $this->subscription_id;
+	}
+
+	/**
+     * Allows to delete the subscription
+     * 
+     * @return mixed
+     */
+	public function delete(){
+		$this->wpdb->delete( $this->wpdb->prefix . 'angelleye_paypal_button_manager_subscriptions', array( 'ID' => $this->subscription_id ) );
 	}
 }

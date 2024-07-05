@@ -36,7 +36,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
      * @param Array attrs Attributes
      * 
      * @return string
-     * */
+     */
     public function print_button( $attrs ){
         global $wpdb;
         if( is_admin() ){
@@ -115,7 +115,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
      * @param string    handle  script tag id
      * 
      * @return string
-     * */
+     */
     public function ppcp_clean_url( $tag, $handle ){
         if( is_admin() ){
             return $tag;
@@ -164,7 +164,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
      * @param boolean   is_sandbox      Whether Sandbox mode or live
      * 
      * @return mixed
-     * */
+     */
     private function generate_id_token( $merchant_id, $is_sandbox ){
         $api = new Angelleye_Paypal_Wp_Button_Manager_Paypal_API( $merchant_id, $is_sandbox );
         $api->set_method('POST');

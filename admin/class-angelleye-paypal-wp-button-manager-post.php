@@ -26,7 +26,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
 
     /**
      * Registers the post type
-     * */
+     * 
+     * @return void
+     */
     public function register_post_type() {
         $labels = array(
             'name' => _x('PayPal Buttons', 'Post type general name', 'angelleye-paypal-wp-button-manager'),
@@ -65,7 +67,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
 
     /**
      * Adds the meta boxes
-     * */
+     * 
+     * @return void
+     */
     public function add_meta_boxes() {
 
         add_meta_box(
@@ -94,7 +98,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * Adds the settings for button
      * 
      * @param WP_Post post post object
-     * */
+     * 
+     * @return void
+     */
     public function add_settings( $post ) {
         global $wpdb;
         
@@ -111,7 +117,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * Saves the settings of the button
      * 
      * @param int post_id id of the post
-     * */
+     * 
+     * @return void
+     */
     function save_settings( $post_id ) {
         global $wpdb;
         // Check if our nonce is set.
@@ -167,14 +175,18 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * Prints the shortcode within admin
      * 
      * @param WP_Post post post object
-     * */
+     * 
+     * @return void
+     */
     public function print_shortcode( $post ){
         include_once(ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH . '/admin/partials/angelleye-paypal-wp-button-manager-admin-shortcode-generator.php');
     }
 
     /**
      * Checks if the paypal company exists, if not then loads the assistance page to setup one.
-     * */
+     * 
+     * @return void
+     */
     public function check_company_exists(){
         global $post_type, $pagenow;
 
@@ -187,14 +199,18 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
 
     /**
      * Registers the iframe route
-     * */
+     * 
+     * @return void
+     */
     public function register_iframe_route(){
         add_rewrite_endpoint( 'angelleye-paypal-button-manager-iframe-preview', EP_ROOT );
     }
 
     /**
      * Adds the template for iframe route
-     * */
+     * 
+     * @return void
+     */
     public function paypal_button_iframe(){
         global $wp;
         if ( isset( $wp->query_vars['angelleye-paypal-button-manager-iframe-preview'] ) ) {
@@ -212,7 +228,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param array     columns     Array of columns
      * 
      * @return array
-     * */
+     */
     public function button_post_type_columns( $columns ){
         $date = $columns['date'];
         unset( $columns['date'] );
@@ -233,7 +249,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param array     columns     Array of columns
      * 
      * @return array
-     * */
+     */
     public function button_post_type_sort_columns( $columns ){
         $columns['item_name'] = 'item_name';
         $columns['item_id'] = 'item_id';
@@ -251,7 +267,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param int       post_id     ID of the post
      * 
      * @return void
-     * */
+     */
     public function fill_button_post_type_columns( $column, $post_id ){
         $button = new Angelleye_Paypal_Wp_Button_Manager_Button( $post_id );
         switch( $column ){
@@ -287,7 +303,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param WP_Query      query       Query object
      * 
      * @return void
-     * */
+     */
     public function handle_custom_column_sorting( $query ) {
         if ( ! is_admin() ) {
             return;
@@ -323,7 +339,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param WP_Query  wp_query    WP_Query object
      * 
      * @return string
-     * */
+     */
     public function custom_column_search( $search, $wp_query ){
         global $wpdb;
 
@@ -339,7 +355,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * Checks if the shortcode is used on any post
      * 
      * @return json
-     * */
+     */
     public function check_shortcode_used(){
         if( get_current_user_id() && current_user_can( 'manage_options' ) ){
             global $wpdb;
@@ -367,7 +383,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @param array    $messages      messages array
      * 
      * @return array
-     * */
+     */
     public function updated_messages_for_buttons($messages) {
         $messages['paypal_button'] = array(
             0  => '',

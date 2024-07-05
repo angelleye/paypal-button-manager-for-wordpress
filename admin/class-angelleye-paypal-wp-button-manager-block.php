@@ -29,6 +29,11 @@ class Angelleye_Paypal_Wp_Button_Manager_Block{
         add_action('enqueue_block_editor_assets', array( $this, 'block_editor_assets') );
     }
 
+    /**
+     * Registers block type
+     * 
+     * @since 1.0.0
+     */
     public function paypal_block_init(){
         register_block_type(
             'angelleye-paypal-wp-button-manager-block/block',
@@ -39,6 +44,11 @@ class Angelleye_Paypal_Wp_Button_Manager_Block{
         );
     }
 
+    /**
+     * Enqueues block editor assets
+     * 
+     * @since 1.0.0
+     */
     public function block_editor_assets(){
 
         $button_posts = get_posts( array( 'numberposts' => -1, 'post_type' => Angelleye_Paypal_Wp_Button_Manager_Post::$post_type, 'post_status' => 'publish' ) );

@@ -26,7 +26,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * @param int $page_number Page number from the pagination
      * 
      * @return array
-     * */
+     */
     public static function get_companies( $per_page = 20, $page_number = 1 ) {
 
         global $wpdb;
@@ -58,7 +58,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * Returns the total record count
      * 
      * @return int
-     * */
+     */
     public static function record_count() {
         global $wpdb;
 
@@ -71,7 +71,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * Returns the no company string
      * 
      * @return string
-     * */
+     */
     public function no_items() {
         _e( 'No accounts avaliable.', 'angelleye-paypal-wp-button-manager' );
     }
@@ -102,7 +102,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * @param array $item array of single company entry
      * 
      * @return string
-     * */
+     */
     public function column_cb($item){
         return '';
     }
@@ -113,7 +113,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * @param array $item array of single company entry
      * 
      * @return string
-     * */
+     */
     function column_name( $item ) {
         $actions = array(
             'delete' => sprintf('<a href="%s?page=%s&action=%s&company_id=%s">%s</a>', admin_url('admin.php'),Angelleye_Paypal_Wp_Button_Manager_Company::$paypal_button_company_slug, 'delete', $item['ID'], __('Delete', 'angelleye-paypal-wp-button-manager') )
@@ -127,7 +127,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * Returns the columns
      * 
      * @return array
-     * */
+     */
     function get_columns() {
         $columns = array(
             'name'          => __('Account Name', 'angelleye-paypal-wp-button-manager'),
@@ -142,7 +142,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
      * Returns the sortable columns
      * 
      * @return array
-     * */
+     */
     protected function get_sortable_columns(){
         $sortable_columns = array(
             'name'  => array('name', true),
@@ -154,7 +154,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Companies extends Angelleye_Paypal_Wp_B
 
     /**
      * Prepares the items
-     * */
+     */
     function prepare_items(){
         $this->_column_headers = $this->get_column_info();
 

@@ -26,7 +26,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * @param int $page_number Page number from the pagination
      * 
      * @return array
-     * */
+     */
     public static function get_subscriptions( $per_page = 20, $page_number = 1 ) {
 
         global $wpdb;
@@ -58,7 +58,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * Returns the total record count
      * 
      * @return int
-     * */
+     */
     public static function record_count() {
         global $wpdb;
 
@@ -71,7 +71,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * Returns the no subscriptions string
      * 
      * @return string
-     * */
+     */
     public function no_items() {
         _e( 'No subscriptions avaliable.', 'angelleye-paypal-wp-button-manager' );
     }
@@ -83,21 +83,20 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * @param string $column_name name of the column
      * 
      * @return string
-     * */
+     */
     public function column_default($item, $column_name){
-          switch ($column_name) {
-                case 'email_address':
-                    return '<a href="mailto:' . $item[$column_name] . '">' . $item[$column_name] . '</a>';
-                case 'next_payment_due_date':
-                    return date('F j, Y', strtotime( $item[$column_name] ) );
-                case 'status':
-                    return ucfirst( $item[$column_name] );
-                case 'ID':
-                case 'first_name':
-                case 'last_name':
-                default:
-                    return $item[$column_name];
-          }
+        switch ($column_name) {
+            case 'next_payment_due_date':
+                return date('F j, Y', strtotime( $item[$column_name] ) );
+            case 'status':
+                return ucfirst( $item[$column_name] );
+            case 'email_address':
+            case 'ID':
+            case 'first_name':
+            case 'last_name':
+            default:
+                return $item[$column_name];
+        }
     }
 
     /**
@@ -106,7 +105,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * @param array $item array of single company entry
      * 
      * @return string
-     * */
+     */
     public function column_cb($item){
         return $item['ID'];
     }
@@ -117,16 +116,22 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * @param array $item array of single subscription entry
      * 
      * @return string
-     * */
-    function column_name( $item ) {
-        return $item['email_address'];
+     */
+    function column_email_address( $item ) {
+        $actions = array(
+            'edit' => sprintf('<a href="%s?page=%s&subscription_id=%s&action=%s">%s</a>', admin_url('admin.php'), Angelleye_Paypal_Wp_Button_Manager_Subscription_Management::$paypal_button_subscription_slug, $item['ID'], 'edit', __('Edit', 'angelleye-paypal-wp-button-manager') ),
+            'delete' => sprintf('<a onclick="return confirm(\'' . __('Are you sure you want to delete? Press OK to confirm.', 'angelleye-paypal-wp-button-manager') . '\');" href="%s?page=%s&action=%s&subscription_id=%s">%s</a>', admin_url('admin.php'),Angelleye_Paypal_Wp_Button_Manager_Subscription_Management::$paypal_button_subscription_slug, 'delete', $item['ID'], __('Delete', 'angelleye-paypal-wp-button-manager') )
+        );
+        $view_page = '<a href="mailto::' . $item['email_address'] . '">'. $item['email_address'] . '</a>';
+
+        return sprintf('%1$s %2$s', $view_page, $this->row_actions($actions));
     }
 
     /**
      * Returns the columns
      * 
      * @return array
-     * */
+     */
     function get_columns() {
         $columns = array(
             'email_address' => __('Email', 'angelleye-paypal-wp-button-manager'),
@@ -142,7 +147,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
      * Returns the sortable columns
      * 
      * @return array
-     * */
+     */
     protected function get_sortable_columns(){
         $sortable_columns = array(
             'email_address'  => array('email_address', true),
@@ -155,7 +160,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Subscription_Management_List_Table exte
 
     /**
      * Prepares the items
-     * */
+     * 
+     * @return void
+     */
     function prepare_items(){
         $this->_column_headers = $this->get_column_info();
 

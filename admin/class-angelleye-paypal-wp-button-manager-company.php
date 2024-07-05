@@ -28,7 +28,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
     /**
      * Adds the menu page
-     * */
+     * 
+     * @return void
+     */
     public function admin_menu(){
         $companies_page = add_submenu_page( 'edit.php?post_type=paypal_button', __('PayPal Accounts','angelleye-paypal-wp-button-manager'), __('PayPal Accounts','angelleye-paypal-wp-button-manager'), 'manage_options', self::$paypal_button_company_slug, array( $this, 'paypal_button_manager_admin') );
         add_action("load-$companies_page", array( $this, 'companies_screen_options') );
@@ -36,7 +38,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
     /**
      * Includes the responsible template for menu page
-     * */
+     * 
+     * @return void
+     */
     public function paypal_button_manager_admin(){
         global $wpdb;
 
@@ -92,7 +96,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
      * @param mixed $value value of the option
      * 
      * @return mixed
-     * */
+     */
     public function save_listing_page_option( $status, $option, $value ) {
         if( $option == 'paypal_companies_per_page' ){
             return $value;
@@ -102,7 +106,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
     /**
      * Creates the screen options for the componies listings
-     * */
+     * 
+     * @return void
+     */
     public function companies_screen_options(){
         $option = 'per_page';
         $args   = [
@@ -118,7 +124,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
     /**
      * Allows to create company
-     * */
+     * 
+     * @return void
+     */
     public function create_company(){
         if( isset( $_POST['save_paypal_ac_type'] ) ){
             global $wpdb;
@@ -142,7 +150,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
     /**
      * Saves the company information
-     * */
+     * 
+     * @return void
+     */
     public function update_company(){
         if( isset( $_GET['merchantIdInPayPal'] ) && isset( $_GET['company_id'] ) ){
             global $wpdb;
@@ -154,6 +164,11 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
         }
     }
 
+    /**
+     * Deletes the created company
+     * 
+     * @return void
+     */
     public function delete_company(){
         if( isset( $_POST['company_id'] ) ){
             global $wpdb;
@@ -177,7 +192,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
      * @param string mode mode of paypal
      * 
      * @return mixed
-     * */
+     */
     private function get_signup_url( $company_id, $tracking_id, $country=null, $mode='live' ){
         $testmode = 'sandbox' === $mode ? 'yes' : 'no';
         $products = array(
@@ -242,7 +257,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
      * @param string mode mode of paypal
      * 
      * @return mixed
-     * */
+     */
     private function get_onboarding_status( $merchant_id, $mode='live' ){
         if( 'sandbox' === $mode ){
             $testmode = 'yes';

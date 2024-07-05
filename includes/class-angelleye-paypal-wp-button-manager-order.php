@@ -17,7 +17,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
     /**
      * Registers the API route to create order
      * 
-     * */
+     */
  	public function register_order_create_route(){
         register_rest_route( 'angelleye-paypal-button-manager', 'create-order', array(
             'methods' => 'POST',
@@ -29,7 +29,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
     /**
      * Adds the rewrite endpoints for capture order and thank you page
      * 
-     * */
+     */
     public function register_custom_endpoints(){
         add_rewrite_endpoint( 'angelleye-capture-order', EP_ROOT );
         add_rewrite_endpoint( 'angelleye-order-received', EP_ROOT );
@@ -38,7 +38,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
     /**
      * Provides the template or calls the applicable functions on template redirect
      * 
-     * */
+     */
     public function custom_endpoint_templates() {
         global $wp;
         if ( isset( $wp->query_vars['angelleye-capture-order'] ) ) {
@@ -72,7 +72,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
      * @param WP_REST_Request   request     request object
      * 
      * @return mixed
-     * */
+     */
     public function create_order(WP_REST_Request $request){
     	$params = $request->get_body();
         $params = json_decode( $params );
@@ -177,7 +177,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
      * Allows to capture order
      * 
      * @return array
-     * */
+     */
     public function capture_order(){
         $paypal_order_id = sanitize_text_field( $_GET['paypal_order_id'] );
         $button_id = sanitize_text_field( $_GET['button_id'] );

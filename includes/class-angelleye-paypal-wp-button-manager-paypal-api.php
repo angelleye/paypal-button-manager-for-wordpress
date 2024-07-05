@@ -32,7 +32,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Allows to set AWS Endpoint
      * 
      * @param endpoint  string      endpoint of the AWS URL.
-     * */
+     */
     public function set_ppcp_endpoint( $endpoint ){
         $this->endpoint = $endpoint;
     }
@@ -42,7 +42,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * 
      * @param url string paypal url
      * @param append boolean whether to append or overwrite
-     * */
+     */
     public function set_paypal_url( $url, $append=false ){
         if( $append ){
             $this->paypal_url .= $url;
@@ -65,7 +65,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
 
     /**
      * Allows to build the header of the API call.
-     * */
+     */
     private function build_header(){
         $this->paypal_header = array(
             'Content-Type' => 'application/json',
@@ -80,7 +80,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Sets the paypal api method
      * 
      * @param method string method
-     * */
+     */
     public function set_method( $method ){
         $this->paypal_method = $method;
     }
@@ -89,7 +89,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Sets the paypal api body
      * 
      * @param body array body of the API call
-     * */
+     */
     public function set_body( $body ){
         $this->paypal_body = $body;
     }
@@ -98,7 +98,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Sets the paypal action
      * 
      * @param action string paypal action
-     * */
+     */
     public function set_action( $action ){
         $this->action_name = $action;
     }
@@ -107,7 +107,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Creates the API call and creates the charge
      * 
      * @return mixed
-     * */
+     */
     public function submit(){
         $this->build_header();
         $request_body = array(
@@ -184,7 +184,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Paypal_API {
      * Allows to get the paypal auth assertion
      * 
      * @return string
-     * */
+     */
 	public function angelleye_ppcp_paypalauthassertion() {
         $temp = array(
             "alg" => "none"

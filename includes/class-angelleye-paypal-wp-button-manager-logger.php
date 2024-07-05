@@ -26,7 +26,7 @@ class Angelleye_PayPal_WP_Button_Manager_Logger {
      * 
      * @param string message error message
      * @param mixed data error data
-     * */
+     */
     public function error( $message, $data = null ) {
         $this->log( $message, 'ERROR', $data );
     }
@@ -36,7 +36,7 @@ class Angelleye_PayPal_WP_Button_Manager_Logger {
      * 
      * @param string message debug message
      * @param mixed data debug data
-     * */
+     */
     public function debug( $message, $data = null ) {
         $this->log( $message, 'DEBUG', $data );
     }
@@ -46,7 +46,7 @@ class Angelleye_PayPal_WP_Button_Manager_Logger {
      * 
      * @param string message info message
      * @param mixed data info data
-     * */
+     */
     public function info( $message, $data = null ) {
         $this->log( $message, 'INFO', $data );
     }
@@ -57,7 +57,7 @@ class Angelleye_PayPal_WP_Button_Manager_Logger {
      * @param string message message string
      * @param string type type of log
      * @param mixed data data that needs to be logged
-     * */
+     */
     private function log( $message, $type, $data = null ) {
         // Append the type prefix to the message
         $prefixed_message = "[$type] $message";
@@ -81,7 +81,7 @@ class Angelleye_PayPal_WP_Button_Manager_Logger {
 
     /**
      * Remove the logs generated before 30 days
-     * */
+     */
     public static function delete_old_logs(){
         $upload_dir = wp_upload_dir();
         $log_directory = $upload_dir['basedir'] . '/' . self::$log_dir;
