@@ -40,14 +40,12 @@
 }
 
 .additional-settings-row-main {
-    /* background: #f2edf3; */
-    /* padding: 20px; */
     margin: 10px 0px 25px 0px;
     border-top: solid 2px #f1f5f9;
     padding-top: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px){
     .paypal-button-generator-form .col-md-6 {
         flex: 0 0 auto;
         width: 50%;
@@ -55,14 +53,9 @@
 }
 
 .paypal-button-generator-form .customization {
-    /* border: 1px solid #cbc8c8; */
     width: 100%;
     margin: 20px 0px 0px 0px;
     border-top: solid 2px #f1f5f9;
-}
-
-.paypal-button-generator-form .customize-row {
-    /*    border-right: 1px solid #cbc8c8;*/
 }
 
 .paypal-button-generator-form .customized-paypal-button,
@@ -254,9 +247,6 @@
     margin: 10px 20px !important;
 }
 
-/*.paypal-button-generator-form .form-group:nth-child(odd) {
-    background: #e1e1e1;
-}*/
 .paypal-button-generator-form .form-group .form-pd {
     margin-bottom: 10px;
     display: flex;
@@ -268,7 +258,6 @@
     /* TWEENER - IE 10 */
     display: -webkit-flex;
     align-items: center;
-    /*    padding: 10px 20px;*/
 }
 
 .paypal-button-generator-form .form-group {
@@ -347,7 +336,6 @@
 
 #wbp-paypal-iframe {
     width: 100%;
-    /*    height: 36vh;*/
 }
 
 .paypal_shortcode_copy {
@@ -542,8 +530,6 @@ span.currency {
     font-size: 16px;
     display: inline-block;
     color: #212B36;
-    /* background: #f0f0f0; */
-    /* padding: 11px 20px; */
     width: 170px;
     margin-bottom: 0px;
     padding-bottom: 0;
@@ -563,7 +549,6 @@ p.total-amount {
     padding: 13px 20px 10px 20px;
     width: 80%;
 }
-
 .additional-settings-row-main .wp-color-result-text {
     background: #333A48;
     color: #ffffff;
@@ -581,12 +566,13 @@ p.total-amount {
 #paypal-button-meta-box .select2-container--default .select2-selection--multiple {
     border: 2px solid #e2e8f0;
     border-radius: 4px;
-}
 
 .select2-container .select2-search--inline .select2-search__field {
     margin-top: 3px !important;
-}
 
+.inside:has(#paypal_shortcode) {
+    display: flex;
+}
 @media screen and (max-width: 1525px) {
     .wp-picker-clear {
         margin: 10px 10px !important;
