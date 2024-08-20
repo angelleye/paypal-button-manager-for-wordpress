@@ -84,7 +84,7 @@
     padding-right: 30px;
     text-align: center;
 }
-.transaction.services, .transaction-date {
+.transaction.subscription, .transaction.services, .transaction-date {
     border-right: 1px solid #ddd;
 }
 .transaction-date-label, .transaction-label, .order-total-amount, .total-amount-detail{
