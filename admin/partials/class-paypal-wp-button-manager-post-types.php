@@ -34,6 +34,7 @@ class AngellEYE_PayPal_WP_Button_Manager_Post_types {
         add_filter('get_edit_post_link', array(__CLASS__, 'bm_change_title_link'), 99, 3);
         /* custom **/
         add_filter('post_row_actions',array(__CLASS__, 'my_action_row'), 10, 2);
+        add_action('admin_action_duplicate_post', array(__CLASS__,'paypal_buttons_duplicate_post'));
     }
 
     public static function bm_change_title_link($link, $post_id, $context) {
@@ -413,9 +414,47 @@ class AngellEYE_PayPal_WP_Button_Manager_Post_types {
         if ($post->post_type == "paypal_buttons") {
             /*this will add View link in the post listing action */
             $actions['edit'] = '<a href="'.admin_url().'post.php?post=' . $post->ID . '&action=edit">'.__('Edit','paypal-wp-button-manager').'</a>';
-            $actions['view'] = '<a href="'.admin_url().'post.php?post=' . $post->ID . '&action=edit&view=true">'.__('View','paypal-wp-button-manager').'</a>';                                    
+            $actions['view'] = '<a href="'.admin_url().'post.php?post=' . $post->ID . '&action=edit&view=true">'.__('View','paypal-wp-button-manager').'</a>';
+            $actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=duplicate_post&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce') . '"  rel="permalink">'. __('Duplicate', 'paypal-wp-button-manager') . '</a>';                                    
         }
         return $actions;
+    }
+
+    public static function paypal_buttons_duplicate_post() {
+        if (! (isset($_GET['post']) || isset($_POST['post']) || (isset($_REQUEST['action']) && 'duplicate_post' == $_REQUEST['action']))) {
+            wp_die('No post to duplicate has been supplied!');
+        }
+     
+        // Get the original post ID
+        $post_id = (isset($_GET['post']) ? $_GET['post'] : $_POST['post']);
+        $post = get_post($post_id);
+     
+        // Create the duplicate
+        if (isset($post) && $post != null) {
+            $new_post = array(
+                'post_title'    => $post->post_title . ' (Copy)',
+                'post_content'  => $post->post_content,
+                'post_status'   => 'draft',
+                'post_type'     => $post->post_type,
+                'post_author'   => $post->post_author,
+            );
+     
+            $new_post_id = wp_insert_post($new_post);
+     
+            // Copy post meta
+            $post_meta = get_post_meta($post_id);
+            foreach ($post_meta as $key => $values) {
+                foreach ($values as $value) {
+                    add_post_meta($new_post_id, $key, $value);
+                }
+            }
+     
+            // Redirect to the edit post screen for the new draft
+            wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
+            exit;
+        } else {
+            wp_die('Post creation failed, could not find original post.');
+        }
     }
 
 }

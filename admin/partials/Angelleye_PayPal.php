@@ -54,6 +54,12 @@ class Angelleye_PayPal {
     var $PrintHeaders = '';
     var $LogResults = '';
     var $LogPath = '';
+    var $NVPCredentials = '';
+    var $Countries = '';
+    var $States = '';
+    var $AVSCodes = '';
+    var $CVV2Codes = '';
+    var $CurrencyCodes = '';
 
     /**
      * Constructor
