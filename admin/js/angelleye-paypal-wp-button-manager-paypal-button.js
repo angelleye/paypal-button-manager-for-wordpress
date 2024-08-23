@@ -130,6 +130,33 @@ jQuery(function ($) {
             setTimeout(previewData(1, inputName), 0);
         }
     });
+
+    $('#add-paypal-buttons-image').on('click', function(e) {
+        e.preventDefault();
+        var frame = wp.media({
+            title: 'Select or Upload an Image',
+            button: {
+                text: 'Use this image'
+            },
+            multiple: false
+        });
+
+        frame.on('select', function() {
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('#paypal-buttons-image-preview').attr('src', attachment.url);
+            $('#paypal_buttons_image_id').val(attachment.id);
+            $('.remove-image').show();
+        });
+
+        frame.open();
+    });
+
+    $(document).on('click', '.remove-image', function(e) {
+        e.preventDefault();
+        $('#paypal-buttons-image-preview').attr('src', '');
+        $('#paypal_buttons_image_id').val('');
+        $(this).hide();
+    });
 });
 
 jQuery(document).on('change', '#wbp-button-layout', function () {

@@ -72,7 +72,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 	public function enqueue_scripts()
 	{
 		if (isset($_GET['page']) && $_GET['page'] == Angelleye_Paypal_WP_Button_Manager_Company::$paypal_button_company_slug) {
-			wp_enqueue_script($this->plugin_name, ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/angelleye-paypal-wp-button-manager-company.js', array('jquery'), $this->version, false);
+			wp_enqueue_script($this->plugin_name, ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/angelleye-paypal-wp-button-manager-company.js', array('jquery'), $this->version, true);
 		}
 
 		if ((isset($_GET['post_type']) && $_GET['post_type'] == Angelleye_Paypal_Wp_Button_Manager_Post::$post_type) || (isset($_GET['post']) && get_post_type(sanitize_text_field($_GET['post'])) == Angelleye_Paypal_Wp_Button_Manager_Post::$post_type)) {
@@ -89,11 +89,15 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 			}
 
 			wp_register_script($this->plugin_name . '-select2', ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/select2.min.js', array('jquery'), $this->version, false);
-			wp_localize_script($this->plugin_name . '-select2', 'wbp_select2', array('placeholder' => __('Please Select', 'angelleye-paypal-wp-button-manager')));
+			wp_localize_script($this->plugin_name . '-select2', 'wbp_select2', array(
+					'placeholder' => __('Please Select', 'angelleye-paypal-wp-button-manager')
+					)
+			);
 			wp_enqueue_script($this->plugin_name . '-select2');
 
 			wp_enqueue_script($this->plugin_name . '-paypal-sdk', 'https://www.paypal.com/sdk/js?&client-id=' . ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_SANDBOX_PARTNER_CLIENT_ID . '&enable-funding=venmo,paylater' . $hide_method, array(), null);
 
+			wp_enqueue_media();
 			wp_register_script($this->plugin_name . '-button', ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/angelleye-paypal-wp-button-manager-paypal-button.js', array($this->plugin_name . '-paypal-sdk', 'jquery'), '1.0.0');
 			wp_localize_script(
 				$this->plugin_name . '-button',
@@ -108,7 +112,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 					'delete_caution_5' => __('Do you wish to proceed with deleting this button?', 'angelleye-paypal-wp-button-manager'),
 					'delete_caution_wait_message' => __('Please Wait', 'angelleye-paypal-wp-button-manager'),
 					'ajaxurl' => admin_url('admin-ajax.php'),
-					'preview_tax_label' => __('Tax (%s%):', 'angelleye-paypal-wp-button-manager')
+					'preview_tax_label' => __('Tax (%s%):', 'angelleye-paypal-wp-button-manager'),
+					'media_title' => __('Select or Upload Image','angelleye-paypal-wp-button-manager'),
+					'media_button_text' => __('Use these image', 'angelleye-paypal-wp-button-manager')
 				)
 			);
 			wp_enqueue_script($this->plugin_name . '-button');

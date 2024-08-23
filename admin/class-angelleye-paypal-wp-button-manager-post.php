@@ -164,10 +164,15 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
             'wbp_button_environment' => sanitize_text_field( $_POST['button-environment'] ),
             'wbp_frequency_count' => sanitize_text_field( $_POST['frequency_count'] ),
             'wbp_frequency' => sanitize_text_field( $_POST['frequency'] ),
+            'wbp_image_id' => sanitize_text_field( $_POST['paypal_buttons_image_id'] )
         );
                
         foreach ( $meta_values as $key => $value ) {
             update_post_meta( $post_id, $key, $value );
+        }
+
+        if( empty( $_POST['paypal_buttons_image_id'] ) ){
+            delete_post_meta( $post_id, 'wbp_image_id' );
         }
     }
 

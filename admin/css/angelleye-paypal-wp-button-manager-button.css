@@ -3,7 +3,12 @@
     font-size: 1.25rem;
     margin: 0px;
 }
-
+.item-image {
+    text-align: center;
+}
+#paypal-buttons-image-preview {
+    width: 50%;
+}
 .paypal-button-generator-form .row {
     display: flex;
     display: -webkit-box;
@@ -566,12 +571,23 @@ p.total-amount {
 #paypal-button-meta-box .select2-container--default .select2-selection--multiple {
     border: 2px solid #e2e8f0;
     border-radius: 4px;
-
+}
 .select2-container .select2-search--inline .select2-search__field {
     margin-top: 3px !important;
-
+}
 .inside:has(#paypal_shortcode) {
     display: flex;
+}
+.add-img-btn-manager {
+    display: flex;
+    gap: 20px;
+}
+.add-img-btn-manager button {
+    background: #f6f7f7 !important;
+    color: #2271b1 !important;
+    height: auto !important;
+    font-weight: 500;
+    border: solid 2px #2271b11a !important;
 }
 @media screen and (max-width: 1525px) {
     .wp-picker-clear {

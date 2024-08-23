@@ -80,6 +80,17 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
     }
 
     /**
+     * Returns the image id of button
+     * 
+     * @param string context context of function i.e. view or edit
+     *
+     * @return mixed
+     */
+    public function get_image_id( $context='view' ){
+        return $this->get_prop( 'wbp_image_id', $context );
+    }
+
+    /**
      * Returns the currency if applicable
      *
      * @param string context context of function i.e. view or edit
