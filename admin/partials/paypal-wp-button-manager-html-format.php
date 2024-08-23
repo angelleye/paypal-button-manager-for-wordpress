@@ -1363,7 +1363,7 @@ class AngellEYE_PayPal_WP_Button_Manager_button_interface {
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <p class="hideShow accessAid previewCustomImageSection <?php echo $previewCustomImageSection; ?>"><img id="previewCustomImage" src="<?php echo BMW_PLUGIN_URL ?>/admin/images/info_nobuttonpreview_121wx26h.gif" border="0" alt="Use your own button image"></p>
+                                                                    <p class="hideShow accessAid previewCustomImageSection <?php echo $previewCustomImageSection; ?>"><img id="previewCustomImage" src="<?php echo BMW_PLUGIN_URL ?>/admin/images/info_nobuttonpreview_121wx26h.gif" border="0" alt="Use your own button image" width="100px"></p>
                                                                 </div>
                                                             </div>                                                                    
                                                         </div>

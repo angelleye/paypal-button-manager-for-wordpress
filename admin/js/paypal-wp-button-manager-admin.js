@@ -260,6 +260,7 @@ jQuery(function ($) {
                 var uploaded_image = image.state().get('selection').first();
                 var image_url = uploaded_image.toJSON().url;
                 $('#customImageUrl').val(image_url);
+                $("#previewCustomImage").attr('src',image_url);
             });
     });
 
