@@ -117,3 +117,14 @@ function run_angelleye_paypal_wp_button_manager() {
 
 }
 run_angelleye_paypal_wp_button_manager();
+
+add_action( 'in_plugin_update_message-paypal-wp-button-manager/paypal-wp-button-manager.php', 'angelleye_custom_plugin_update_message', 10, 2 );
+function angelleye_custom_plugin_update_message( $plugin_data, $response ) {
+    // Check if the plugin has an update available
+    if ( isset( $response->upgrade_notice ) && ! empty( $response->upgrade_notice ) ) {
+        echo '<div style="margin-top: 10px; padding: 5px; background-color: #fff9c4; border: 1px solid #f1c40f;">';
+        echo '<p><strong>' . __('Important Update Notice:','angelleye-paypal-wp-button-manager') . '</strong></p>';
+        echo '<p>' . sprintf( __('If you\'re using an existing payment button do not update the plugin to the newest version, instead please create a new button <a href="%s">Here</a>', 'angelleye-paypal-wp-button-manager' ), admin_url('post-new.php?post_type=paypal_buttons') ) . '</p>';
+        echo '</div>';
+    }
+}
