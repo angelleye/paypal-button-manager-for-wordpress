@@ -104,17 +104,17 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
                             'quantity' => 1,
                             'unit_amount' => array(
                                 'currency_code' => $button->get_currency(),
-                                'value' => $button->get_price()
+                                'value' => round( $button->get_price(), 2)
                             ),
                         )
                     ),
                     'amount' => array(
                         'currency_code' => $button->get_currency(),
-                        'value' => $amount,
+                        'value' => round( $amount, 2),
                         'breakdown' => array(
                             'item_total' => array(
                                 'currency_code' => $button->get_currency(),
-                                'value' => $button->get_price()
+                                'value' => round( $button->get_price(), 2)
                             )
                         )
                     ),
@@ -148,18 +148,18 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
         if( !empty( $button->get_shipping_amount() ) ){
             $paypal_body['purchase_units'][0]['amount']['breakdown']['shipping'] = array(
                 'currency_code' => $button->get_currency(),
-                'value' => $button->get_shipping_amount(),
+                'value' => round( $button->get_shipping_amount(), 2),
             );
         }
 
         if( !empty( $button->get_tax_total() ) ){
             $paypal_body['purchase_units'][0]['items'][0]['tax'] = array(
                 'currency_code' => $button->get_currency(),
-                'value' => $button->get_tax_total()
+                'value' => round( $button->get_tax_total(), 2)
             );
             $paypal_body['purchase_units'][0]['amount']['breakdown']['tax_total'] = array(
                 'currency_code' => $button->get_currency(),
-                'value' => $button->get_tax_total()
+                'value' => round( $button->get_tax_total(), 2)
             );
         }
 
