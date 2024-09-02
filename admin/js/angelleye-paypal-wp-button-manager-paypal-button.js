@@ -16,7 +16,7 @@ function angelleyeUpdateConfig() {
 }
 
 jQuery(document).on('change', '.wbp-field, #wbp-button-hide-funding', angelleyeUpdateConfig);
-jQuery(document).on('change', '#item-name, #item-price, #item_price_currency, .shipping-tax.row .shipping-amount, .text-rate, #hide-data-fields', previewData);
+jQuery(document).on('change', '#item-name, #item-price, #item_price_currency, .shipping-tax.row .shipping-amount, .text-rate, #hide-data-fields, input[name="item_tax_name"], #tax_on_shipping', previewData);
 
 jQuery(function ($) {
     $('#frequency_count').removeAttr('required');
@@ -216,9 +216,18 @@ function previewData(clear = 0, inputName = null) {
 
     var tax = 0;
     if (jQuery(".text-rate").val()) {
-        jQuery(".tax-rate-label").text(angelleye_paypal_wp_button_manager_admin_paypal_button.preview_tax_label.replace('%s', jQuery(".text-rate").val()));
+        jQuery(".tax-rate-label").text(jQuery('input[name="item_tax_name"]').val() + ' (' + jQuery(".text-rate").val() + '%)');
         tax = parseFloat(jQuery(".text-rate").val());
-        var tax_price = (price * (tax / 100));
+        
+        if( jQuery("#tax_on_shipping").is(":checked") ){
+            var shipping = parseFloat(jQuery(".shipping-amount").val());
+            if( isNaN( shipping ) ){
+                shipping = 0;
+            }
+            var tax_price = ((price-shipping) * (tax / 100));
+        } else {
+            var tax_price = (price * (tax / 100));
+        }
         jQuery(".tax-amount").html(priceHTML(tax_price));
         jQuery(".tax-rate").show();
     } else {
@@ -227,7 +236,15 @@ function previewData(clear = 0, inputName = null) {
 
     if (price != 0) {
         if (tax != 0) {
-            var total_price = price + (price * (tax / 100));
+            if( jQuery("#tax_on_shipping").is(":checked") ){
+                var shipping = parseFloat(jQuery(".shipping-amount").val());
+                if( isNaN( shipping ) ){
+                    shipping = 0;
+                }
+                var total_price = price + ( (price-shipping) * (tax / 100));
+            } else {
+                var total_price = price + (price * (tax / 100));
+            }
         } else {
             var total_price = price;
         }
@@ -241,7 +258,6 @@ function previewData(clear = 0, inputName = null) {
     if (jQuery('input[name="left_background_color"]').val() && clear != 1) {
         var left_background_color = jQuery('input[name="left_background_color"]').val();
         jQuery('.item-name-label, .item-price-label, .shipping-rate-label, .tax-rate-label, .total-amount-label').css('background-color', left_background_color);
-
     } else if (clear == 1 && inputName.attr('name') == 'left_background_color') {
         jQuery('.item-name-label, .item-price-label, .shipping-rate-label, .tax-rate-label, .total-amount-label').css('background-color', '');
     }
@@ -249,25 +265,22 @@ function previewData(clear = 0, inputName = null) {
     if (jQuery('input[name="left_foreground_color"]').val() && clear != 1) {
         var left_foreground_color = jQuery('input[name="left_foreground_color"]').val();
         jQuery('.item-name-label, .item-price-label, .shipping-rate-label, .tax-rate-label, .total-amount-label').css('color', left_foreground_color);
-
     } else if (clear == 1 && inputName.attr('name') == 'left_foreground_color') {
         jQuery('.item-name-label, .item-price-label, .shipping-rate-label, .tax-rate-label, .total-amount-label').css('color', '');
     }
 
     if (jQuery('input[name="right_background_color"]').val() && clear != 1) {
         var right_background_color = jQuery('input[name="right_background_color"]').val();
-        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount').css('background-color', right_background_color);
-
+        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount-details').css('background-color', right_background_color);
     } else if (clear == 1 && inputName.attr('name') == 'right_background_color') {
-        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount').css('background-color', '');
+        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount-details').css('background-color', '');
     }
 
     if (jQuery('input[name="right_foreground_color"]').val() && clear != 1) {
         var right_foreground_color = jQuery('input[name="right_foreground_color"]').val();
-        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount').css('color', right_foreground_color);
-
+        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount-details').css('color', right_foreground_color);
     } else if (clear == 1 && inputName.attr('name') == 'right_foreground_color') {
-        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount').css('color', '');
+        jQuery('.item-name-details, .price, .shipping-rate, .tax-rate, .total-amount-details').css('color', '');
     }
 
     if (!jQuery("#hide-data-fields").is(':checked')) {

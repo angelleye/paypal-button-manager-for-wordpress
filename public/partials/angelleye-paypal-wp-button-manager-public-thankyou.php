@@ -51,7 +51,7 @@ get_header();
 
             if( !empty( $button->get_tax_rate() ) ){
                 ?><div class="tax-rate" style="<?php echo (!empty($button->right_background_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'background: '.$button->right_background_color() : '' ?>; <?php echo (!empty($button->right_foreground_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'color: '.$button->right_foreground_color() : ''; ?>">
-                    <label class="tax-rate-label" style="<?php echo (!empty($button->left_background_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'background: '.$button->left_background_color() : '' ?>; <?php echo (!empty($button->left_foreground_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'color: '.$button->left_foreground_color() : ''; ?>"><?php echo sprintf( __("Tax (%s%%): ", "angelleye-paypal-wp-button-manager"), $button->get_tax_rate() ); ?></label>
+                    <label class="tax-rate-label" style="<?php echo (!empty($button->left_background_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'background: '.$button->left_background_color() : '' ?>; <?php echo (!empty($button->left_foreground_color()) && $button->is_data_fields_hidden() !== 'yes') ? 'color: '.$button->left_foreground_color() : ''; ?>"><?php echo sprintf( __("%s (%s%%): ", "angelleye-paypal-wp-button-manager"), $button->get_tax_name(), $button->get_tax_rate() ); ?></label>
                     <p class="tax-amount"><?php echo angelleye_paypal_button_manager_get_price_html( $tax, $button->get_currency() ); ?></p>
                 </div><?php 
             }

@@ -278,6 +278,28 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
     }
 
     /**
+     * Returns if the tax applicable on shipping or not
+     *
+     * @param string context context of function i.e. view or edit
+     *
+     * @return string
+     */
+    public function get_tax_on_shipping( $context='view' ){
+        return $this->get_prop( 'wbp_tax_on_shipping', $context );
+    }
+
+    /**
+     * Returns the tax name
+     *
+     * @param string context context of function i.e. view or edit
+     *
+     * @return string
+     */
+    public function get_tax_name( $context='view' ){
+        return $this->get_prop( 'wbp_tax_name', $context );
+    }
+
+    /**
      * Returns the hidden funding method
      * 
      * @param string context context of function i.e. view or edit
@@ -334,7 +356,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Button{
             $price = 0;
         }
 
-        $shipping = !empty( $this->get_shipping_amount() ) ? $this->get_shipping_amount() : 0;
+        $shipping = ( $this->get_tax_on_shipping() == 'no' && !empty( $this->get_shipping_amount() ) ) ? $this->get_shipping_amount() : 0;
 
         $total_amount = $price + $shipping;
 

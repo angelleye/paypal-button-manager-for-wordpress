@@ -164,7 +164,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
             'wbp_button_environment' => sanitize_text_field( $_POST['button-environment'] ),
             'wbp_frequency_count' => sanitize_text_field( $_POST['frequency_count'] ),
             'wbp_frequency' => sanitize_text_field( $_POST['frequency'] ),
-            'wbp_image_id' => sanitize_text_field( $_POST['paypal_buttons_image_id'] )
+            'wbp_image_id' => sanitize_text_field( $_POST['paypal_buttons_image_id'] ),
+            'wbp_tax_name' => sanitize_text_field( $_POST['item_tax_name'] ),
+            'wbp_tax_on_shipping' => isset( $_POST['tax_on_shipping'] ) ? 'yes' : 'no',
         );
                
         foreach ( $meta_values as $key => $value ) {

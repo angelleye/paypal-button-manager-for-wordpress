@@ -112,7 +112,6 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 					'delete_caution_5' => __('Do you wish to proceed with deleting this button?', 'angelleye-paypal-wp-button-manager'),
 					'delete_caution_wait_message' => __('Please Wait', 'angelleye-paypal-wp-button-manager'),
 					'ajaxurl' => admin_url('admin-ajax.php'),
-					'preview_tax_label' => __('Tax (%s%):', 'angelleye-paypal-wp-button-manager'),
 					'media_title' => __('Select or Upload Image','angelleye-paypal-wp-button-manager'),
 					'media_button_text' => __('Use these image', 'angelleye-paypal-wp-button-manager')
 				)

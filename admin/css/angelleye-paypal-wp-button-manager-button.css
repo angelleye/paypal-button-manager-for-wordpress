@@ -49,7 +49,20 @@
     border-top: solid 2px #f1f5f9;
     padding-top: 20px;
 }
-
+.tax_on_shipping {
+    margin-bottom: 12px;
+}
+.d-flex {
+    display: flex;
+}
+.tax_on_shipping_lbl {
+    font-size: 12px !important;
+    color: #878383 !important;
+    padding-bottom: 0px !important;
+    position: relative;
+    top: -3px;
+    margin-left: 7px;
+}
 @media (min-width: 768px){
     .paypal-button-generator-form .col-md-6 {
         flex: 0 0 auto;

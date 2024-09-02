@@ -70,6 +70,29 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                                 <input type="number" min="0" step=".01" name="item_price" id="item-price" class="form-control" value="<?php echo $button->get_price( 'edit' ); ?>" required>
                             </div>
                         </div>
+                        <div class="shipping col-md-6">
+                            <div class="form-pd">
+                                <label><?php _e("Shipping", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use specific amount: (<span class=shipping-currency>USD</span>))", "angelleye-paypal-wp-button-manager") ?></label>
+                                <input type="number" min="0" step=".01" class="shipping-amount form-control" name="item_shipping_amount" value="<?php echo $button->get_shipping_amount(); ?>">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="shipping-tax row">
+                        <div class="tax col-md-6">
+                            <div class="form-pd">
+                                <label><?php _e("Tax Name", "angelleye-paypal-wp-button-manager"); ?></label>
+                                <input type="text" class="form-control" name="item_tax_name" value="<?php echo $button->get_tax_name(); ?>">
+                            </div>
+                        </div>
+                        <div class="tax col-md-6">
+                            <div class="form-pd">
+                                <label><?php _e("Tax", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use tax rate: (%))", "angelleye-paypal-wp-button-manager") ?></label>
+                                <input type="number" min="0" step=".01" class="text-rate form-control" name="item_tax_rate" value="<?php echo $button->get_tax_rate(); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-pd">
                                 <label for="item_price_currency"><?php _e("Currency", "angelleye-paypal-wp-button-manager") ?></label>
@@ -80,18 +103,13 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                                 ?></select>
                             </div>
                         </div>
-                    </div>
-                    <div class="shipping-tax row">
-                        <div class="shipping col-md-6">
+                        <div class="col-md-6">
                             <div class="form-pd">
-                                <label><?php _e("Shipping", "angelleye-paypal-wp-button-manager", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use specific amount: (<span class=shipping-currency>USD</span>))", "angelleye-paypal-wp-button-manager") ?></label>
-                                <input type="number" min="0" step=".01" class="shipping-amount form-control" name="item_shipping_amount" value="<?php echo $button->get_shipping_amount(); ?>">
-                            </div>
-                        </div>
-                        <div class="tax col-md-6">
-                            <div class="form-pd">
-                                <label><?php _e("Tax", "angelleye-paypal-wp-button-manager", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use tax rate: (%))", "angelleye-paypal-wp-button-manager") ?></label>
-                                <input type="number" min="0" step=".01" class="text-rate form-control" name="item_tax_rate" value="<?php echo $button->get_tax_rate(); ?>">
+                                <label for="tax_on_shipping" class="tax_on_shipping"><?php _e("Apply Tax on Shipping", "angelleye-paypal-wp-button-manager") ?> </label>
+                                <div class="d-flex">
+                                    <input type="checkbox" id="tax_on_shipping" class="form-control" name="tax_on_shipping" <?php if( $button->get_tax_on_shipping( 'edit' ) == 'yes' ){ echo 'checked="checked"'; } ?>>
+                                    <label for="tax_on_shipping" class="tax_on_shipping_lbl"><?php _e('Check this checkbox to appy tax on shipping'); ?></label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -278,10 +296,10 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                                         <p class="shipping"></p>
                                     </div>
                                     <div class="tax-rate">
-                                        <label class="tax-rate-label" ></label>
+                                        <label class="tax-rate-label"></label>
                                         <p class="tax-amount"></p>
                                     </div>
-                                    <div>
+                                    <div class="total-amount-details">
                                         <label class="total-amount-label"><?php _e("Total Amount:", "angelleye-paypal-wp-button-manager"); ?></label>
                                         <p class="total-amount"></p>
                                     </div>
