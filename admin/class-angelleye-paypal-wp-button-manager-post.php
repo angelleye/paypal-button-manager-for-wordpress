@@ -245,6 +245,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
         $columns['price'] = __('Price', 'angelleye-paypal-wp-button-manager');
         $columns['currency'] = __('Currency', 'angelleye-paypal-wp-button-manager');
         $columns['shipping'] = __('Shipping','angelleye-paypal-wp-button-manager');
+        $columns['paypal_account_company_name'] = __('PayPal Account Company Name','angelleye-paypal-wp-button-manager');
         $columns['tax'] = __('Tax','angelleye-paypal-wp-button-manager');
         $columns['date'] = $date;
         return $columns;
@@ -263,6 +264,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
         $columns['price'] = 'price';
         $columns['currency'] = 'currency';
         $columns['shipping'] = 'shipping';
+        $columns['paypal_account_company_name'] = 'paypal_account_company_name';
         $columns['tax'] = 'tax';
         return $columns;
     }
@@ -276,6 +278,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
      * @return void
      */
     public function fill_button_post_type_columns( $column, $post_id ){
+        global $wpdb;
         $button = new Angelleye_Paypal_Wp_Button_Manager_Button( $post_id );
         switch( $column ){
             case 'item_name':
@@ -301,6 +304,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
             case 'tax':
                 echo $button->get_tax_rate();
                 break;
+
+            case 'paypal_account_company_name':
+                echo $wpdb->get_var( $wpdb->prepare( "SELECT company_name FROM {$wpdb->prefix}angelleye_paypal_button_manager_companies WHERE ID = %d", $button->get_company_id() ) );
         }
     }
 
