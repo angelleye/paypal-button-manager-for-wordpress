@@ -28,6 +28,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Activator {
             `country` varchar(2) NULL,
             `paypal_mode` tinytext  NULL,
             `paypal_merchant_id` text  NULL,
+            `paypal_email` tinytext NULL,
             `tracking_id` text NULL,
             `products` text NULL,
             PRIMARY KEY ID (ID)

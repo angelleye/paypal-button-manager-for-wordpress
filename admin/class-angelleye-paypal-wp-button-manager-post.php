@@ -245,7 +245,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
         $columns['price'] = __('Price', 'angelleye-paypal-wp-button-manager');
         $columns['currency'] = __('Currency', 'angelleye-paypal-wp-button-manager');
         $columns['shipping'] = __('Shipping','angelleye-paypal-wp-button-manager');
-        $columns['paypal_account_company_name'] = __('PayPal Account Company Name','angelleye-paypal-wp-button-manager');
+        $columns['paypal_account'] = __('PayPal Account','angelleye-paypal-wp-button-manager');
         $columns['tax'] = __('Tax','angelleye-paypal-wp-button-manager');
         $columns['date'] = $date;
         return $columns;
@@ -264,7 +264,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
         $columns['price'] = 'price';
         $columns['currency'] = 'currency';
         $columns['shipping'] = 'shipping';
-        $columns['paypal_account_company_name'] = 'paypal_account_company_name';
+        $columns['paypal_account'] = 'paypal_account';
         $columns['tax'] = 'tax';
         return $columns;
     }
@@ -305,8 +305,10 @@ class Angelleye_Paypal_Wp_Button_Manager_Post{
                 echo $button->get_tax_rate();
                 break;
 
-            case 'paypal_account_company_name':
-                echo $wpdb->get_var( $wpdb->prepare( "SELECT company_name FROM {$wpdb->prefix}angelleye_paypal_button_manager_companies WHERE ID = %d", $button->get_company_id() ) );
+            case 'paypal_account':
+                $company_info = $wpdb->get_row( $wpdb->prepare( "SELECT company_name, paypal_email FROM {$wpdb->prefix}angelleye_paypal_button_manager_companies WHERE ID = %d", $button->get_company_id() ) );
+                echo $company_info->company_name . '<br><a href="mailto:' . $company_info->paypal_email . '">' . $company_info->paypal_email . '</a>';
+                break;
         }
     }
 

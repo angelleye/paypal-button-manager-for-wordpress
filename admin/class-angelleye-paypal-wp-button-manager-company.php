@@ -60,12 +60,13 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
             if( isset( $company->paypal_merchant_id ) && !empty( $company->paypal_merchant_id ) ){
 
-                $products = $this->get_onboarding_status( $company->paypal_merchant_id, $company->paypal_mode );
+                $status = $this->get_onboarding_status( $company->paypal_merchant_id, $company->paypal_mode );
 
-                if( !is_wp_error( $products ) ){
-                    $wpdb->update( $wpdb->prefix . 'angelleye_paypal_button_manager_companies', array('products' => serialize( $products ) ), array( 'ID' => $company_id ) );
+                if( !is_wp_error( $status ) ){
+                    $products = $status['products'];
+                    $wpdb->update( $wpdb->prefix . 'angelleye_paypal_button_manager_companies', array('products' => serialize( $products ), 'paypal_email' => $status['email'] ), array( 'ID' => $company_id ) );
                 } else {
-                    $products = $products->get_error_message();
+                    $products = $status->get_error_message();
                 }
 
                 include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/angelleye-paypal-wp-button-manager-admin-company-information.php');
@@ -324,7 +325,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
                 'capabilities' => $capabilities
             );
         }
-        $this->logger->info( 'Onboarding status check successful', $products );
-        return $products;
+
+        $status = array( 'products' => $products, 'email' => $response->body->primary_email );
+        $this->logger->info( 'Onboarding status check successful', $status );
+        return $status;
     }
 }
