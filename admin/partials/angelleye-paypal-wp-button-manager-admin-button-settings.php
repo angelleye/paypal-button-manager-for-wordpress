@@ -250,7 +250,7 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                                     <div class="form-pd">
                                         <label for="wbp-button-shape"><?php _e('Button Shape','angelleye-paypal-wp-button-manager'); ?></label>
                                         <select name="wbp-button-shape" id="wbp-button-shape" class="form-control wbp-field">
-                                            <option value="rect" <?php selected('rect',$button->get_button_shape( 'edit' ) ); ?>><?php _e('Rect', 'angelleye-paypal-wp-button-manager'); ?></option>
+                                            <option value="rect" <?php selected('rect',$button->get_button_shape( 'edit' ) ); ?>><?php _e('Rectangle', 'angelleye-paypal-wp-button-manager'); ?></option>
                                             <option value="pill" <?php selected('pill',$button->get_button_shape( 'edit' ) ); ?>><?php _e('Pill','angelleye-paypal-wp-button-manager'); ?></option>
                                         </select>
                                     </div>
