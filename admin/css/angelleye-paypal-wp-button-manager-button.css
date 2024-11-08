@@ -21,6 +21,10 @@
     flex-wrap: wrap;
 }
 
+.paypal_shortcode_info{
+    position: relative;
+}
+
 .paypal-button-generator-form .row>* {
     width: 100%;
     max-width: 100%;
@@ -282,6 +286,10 @@
     margin-bottom: 10px;
 }
 
+.ml-1 {
+    margin-left: 1%;
+}
+
 .paypal-button-generator-form .panel-body input[type=date],
 .paypal-button-generator-form .panel-body input[type=datetime-local],
 .paypal-button-generator-form .panel-body input[type=datetime],
@@ -361,27 +369,38 @@
     cursor: pointer;
 }
 
-.paypal_shortcode_copy .tooltiptext,
-.paypal_shortcode_info .tooltiptext {
+.paypal_shortcode_copy .tooltiptext, .paypal_shortcode_info .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 107px;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
+    padding: 5px 5px;
     position: absolute;
     z-index: 1;
     bottom: 100%;
-    /* Position the tooltip above the element */
     left: 85%;
-    /* Center the tooltip horizontally */
     transform: translateX(-50%);
-    /* Center the tooltip horizontally */
 }
-
+.additional-settings #hide-data-fields{
+    margin-top: 3px;
+}
+.additional-settings #hide-data-fields {
+    width: 19px;
+    height: 19px;
+}
+.additional-settings #hide-data-fields:focus-visible{
+    outline: none;
+}
+.additional-settings label{
+    font-size: 12px !important;
+    color: #878383 !important;
+    padding-bottom: 0px !important;
+    position: relative;
+    top: 4px;
+    margin-left: 7px;
+}
 .paypal_shortcode_copy:hover .tooltiptext,
 .paypal_shortcode_info:hover .tooltiptext {
     visibility: visible;
@@ -629,10 +648,6 @@ p.total-amount {
     .paypal-button-generator-form .form-group .form-pd {
         display: block;
         margin-bottom: 10px;
-    }
-
-    .paypal-button-generator-form label {
-        width: 100%;
     }
 
     .customize-button label {

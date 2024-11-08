@@ -8,7 +8,10 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                 <div class="row" class="row">
                     <div class="btn_type col-md-12">
                         <div class="form-pd">
-                            <label for="button_type"><?php _e("Choose a button type", "angelleye-paypal-wp-button-manager") ?></label>
+                            <div class="d-flex">
+                                <label for="button_type"><?php _e("Choose a button type", "angelleye-paypal-wp-button-manager") ?></label>
+                                <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose \'Buy Now\' for a one-time purchase or \'Subscription\' for automatic renewals at selected intervals.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                            </div>
                             <select class="form-control button-type" name="button_type" id="button_type">
                                 <option value="services" <?php selected('services', $button->get_button_type( 'edit' ) ); ?>><?php _e("Buy Now", "angelleye-paypal-wp-button-manager"); ?></option>
                                 <option value="subscription" <?php selected('subscription', $button->get_button_type( 'edit' ) ); ?>><?php _e('Subscription', 'angelleye-paypal-wp-button-manager'); ?></option>
@@ -21,8 +24,10 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                         <div class="form-pd">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="company_id"><?php _e("Choose Account Name:", "angelleye-paypal-wp-button-manager");?>
-                                    </label>
+                                    <div class="d-flex">
+                                        <label for="company_id"><?php _e("Choose PayPal Account:", "angelleye-paypal-wp-button-manager");?></label>
+                                        <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the PayPal account where the payment will be directed.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -40,13 +45,19 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="row mb-3" class="item-details">
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="item-name"><?php _e("Item Name", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="item-name"><?php _e("Item Name", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the item name that will be visible to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="text" name="product_name" id="item-name" class="form-control" value="<?php echo $button->get_item_name( 'edit' ); ?>" maxlength="100" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="item-id"><?php _e("Item ID", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="item-id"><?php _e("Item ID", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the item ID that will be used for your internal usage.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="text" name="product_id" id="item-id" class="form-control" value="<?php echo $button->get_item_id( 'edit' ); ?>">
                             </div>
                         </div>
@@ -54,7 +65,10 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <div class="form-pd">
-                                <label for="add-paypal-buttons-image"><?php _e("Choose Image", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="add-paypal-buttons-image"><?php _e("Choose Image", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose an image that will be shown to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <div class="add-img-btn-manager">
                                     <button class="button" id="add-paypal-buttons-image"><?php _e('Choose Image','angelleye-paypal-wp-button-manager'); ?></button>
                                     <button class="button remove-image" style="display: <?php echo $button->get_image_id() ? 'inline-block' : 'none'; ?>;"><?php _e('Remove Image','angelleye-paypal-wp-button-manager'); ?></button>
@@ -66,13 +80,19 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="row mb-3" class="item-details-meta">
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="item-price"><?php _e("Price", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="item-price"><?php _e("Price", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the price of the item.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="number" min="0" step=".01" name="item_price" id="item-price" class="form-control" value="<?php echo $button->get_price( 'edit' ); ?>" required>
                             </div>
                         </div>
                         <div class="shipping col-md-6">
                             <div class="form-pd">
-                                <label><?php _e("Shipping", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use specific amount: (<span class=shipping-currency>USD</span>))", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label><?php _e("Shipping", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use specific amount: (<span class=shipping-currency>USD</span>))", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the shipping cost, or leave it blank to offer free delivery.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="number" min="0" step=".01" class="shipping-amount form-control" name="item_shipping_amount" value="<?php echo $button->get_shipping_amount(); ?>">
                             </div>
                         </div>
@@ -81,13 +101,19 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="shipping-tax row">
                         <div class="tax col-md-6">
                             <div class="form-pd">
-                                <label><?php _e("Tax Name", "angelleye-paypal-wp-button-manager"); ?></label>
+                                <div class="d-flex">
+                                    <label><?php _e("Tax Name", "angelleye-paypal-wp-button-manager"); ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the tax name to charge customers, or leave it blank for no tax.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="text" class="form-control" name="item_tax_name" value="<?php echo $button->get_tax_name(); ?>">
                             </div>
                         </div>
                         <div class="tax col-md-6">
                             <div class="form-pd">
-                                <label><?php _e("Tax", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use tax rate: (%))", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label><?php _e("Tax", "angelleye-paypal-wp-button-manager") ?> <?php _e("(Use tax rate: (%))", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Enter the tax rate in percentage, or leave it blank if no tax is applied.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <input type="number" min="0" step=".01" class="text-rate form-control" name="item_tax_rate" value="<?php echo $button->get_tax_rate(); ?>">
                             </div>
                         </div>
@@ -95,7 +121,10 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="item_price_currency"><?php _e("Currency", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="item_price_currency"><?php _e("Currency", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the currency in which the item is priced.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <select class="form-control currency" name="item_price_currency" id="item_price_currency" required><?php 
                                 foreach($currencies as $currency){
                                     ?><option value="<?php echo $currency['value']; ?>" <?php selected( $currency['value'], $button->get_currency( 'edit' ) ) ?> data-title="<?php echo $currency['title']; ?>"><?php echo $currency['value']; ?></option><?php
@@ -116,13 +145,19 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                     <div class="row mb-3 subscription-settings" <?php echo $button->get_button_type( 'edit' ) != 'subscription' ? 'style="display:none;"' : ''; ?>>
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="frequency_count"><?php _e('Subscription Management','angelleye-paypal-wp-button-manager'); ?> <?php _e("(Frequency Count)", "angelleye-paypal-wp-button-manager") ?></label>
-                                <input type="text" name="frequency_count" id="frequency_count" class="form-control" value="<?php echo $button->get_frequency_count( 'edit' ); ?>" maxlength="100" required>
+                                <div class="d-flex">
+                                    <label for="frequency_count"><?php _e('Subscription Management','angelleye-paypal-wp-button-manager'); ?> <?php _e("(Frequency Count)", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Specify the frequency count (greater than 0). For example, \'1\' entered here with \'month\' chosen on frequency will renew subscriptions monthly.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
+                                <input type="number" min="1" name="frequency_count" id="frequency_count" class="form-control" value="<?php echo $button->get_frequency_count( 'edit' ); ?>" maxlength="100" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-pd">
-                                <label for="frequency"><?php _e("Frequency", "angelleye-paypal-wp-button-manager") ?></label>
+                                <div class="d-flex">
+                                    <label for="frequency"><?php _e("Frequency", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Specify the frequency. For example, \'1\' entered in frequency count with \'month\' chosen here will renew subscriptions monthly.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                </div>
                                 <select name="frequency" id="frequency" class="form-control">
                                     <option value=""><?php _e('Please Select','angelleye-paypal-wp-button-manager'); ?></option>
                                     <option value="day" <?php selected( $button->get_frequency( 'edit' ), 'day' ); ?>><?php _e('Days','angelleye-paypal-wp-button-manager'); ?></option>
@@ -139,35 +174,48 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                             <div class="additional-settings col-md-6">
                                 <div class="form-pd additional-settings">
                                     <h5 class="additional-heading"><?php esc_html_e("Additional Settings", "angelleye-paypal-wp-button-manager"); ?></h5>
-                                    
-                                    <input type="checkbox" id="hide-data-fields" class="form-control" name="hide_data_fields" value="yes" <?php echo ($button->is_data_fields_hidden() == 'yes') ? 'checked' : '' ?>>
-                                    <label for="hide-data-fields"><?php esc_html_e("Hide item and pricing details, so that only the buttons are displayed.", "angelleye-paypal-wp-button-manager"); ?></label>
+                                    <div class="d-flex">
+                                        <input type="checkbox" id="hide-data-fields" class="form-control" name="hide_data_fields" value="yes" <?php echo ($button->is_data_fields_hidden() == 'yes') ? 'checked' : '' ?>>
+                                        <label for="hide-data-fields"><?php esc_html_e("Hide item and pricing details, so that only the buttons are displayed.", "angelleye-paypal-wp-button-manager"); ?></label>
+                                    </div>
                                 </div>
                             </div>                   
                         </div>
                         <div class="row data-fields-additional-settings-row" style="<?php echo ($button->is_data_fields_hidden() == 'yes') ? 'display: none' : '' ?>">
                             <div class="data-fields-additional-settings-background col-md-6">
                                 <div class="form-pd data-fields-additional-settings">
-                                    <p><label><?php _e("Left Background Color", "angelleye-paypal-wp-button-manager"); ?></label></p>
+                                    <p class="d-flex">
+                                        <label><?php _e("Left Background Color", "angelleye-paypal-wp-button-manager"); ?></label>
+                                        <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the background color for the left section of the item details shown to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    </p>
                                     <input type="text" name="left_background_color" class="angelleye-color-picker" value="<?php echo $button->left_background_color(); ?>"  />
                                 </div>
                             </div>
                             <div class="data-fields-additional-settings-background col-md-6">
                                 <div class="form-pd data-fields-additional-settings">
-                                    <p><label><?php _e("Right Background Color", "angelleye-paypal-wp-button-manager"); ?></label></p>
+                                    <p class="d-flex">
+                                        <label><?php _e("Right Background Color", "angelleye-paypal-wp-button-manager"); ?></label>
+                                        <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the background color for the right section of the item details shown to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    </p>
                                     <input type="text" name="right_background_color" class="angelleye-color-picker" value="<?php echo $button->right_background_color(); ?>"  />
                                 </div>
                             </div>
 
                             <div class="data-fields-additional-settings-foreground col-md-6">
                                 <div class="form-pd data-fields-additional-settings">
-                                    <p><label><?php _e("Left Foreground Color", "angelleye-paypal-wp-button-manager"); ?></label></p>
+                                    <p class="d-flex">
+                                        <label><?php _e("Left Foreground Color", "angelleye-paypal-wp-button-manager"); ?></label>
+                                        <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the text color for the left section of the item details shown to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    </p>
                                     <input type="text" name="left_foreground_color" class="angelleye-color-picker" value="<?php echo $button->left_foreground_color(); ?>"  />
                                 </div>
                             </div>
                             <div class="data-fields-additional-settings-foreground col-md-6">
                                 <div class="form-pd data-fields-additional-settings">
-                                    <p><label><?php _e("Right Foreground Color", "angelleye-paypal-wp-button-manager"); ?></label></p>
+                                    <p class="d-flex">
+                                        <label><?php _e("Right Foreground Color", "angelleye-paypal-wp-button-manager"); ?></label>
+                                        <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Choose the text color for the right section of the item details shown to customers.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    </p>
                                     <input type="text" name="right_foreground_color" class="angelleye-color-picker" value="<?php echo $button->right_foreground_color(); ?>"  />
                                 </div>
                             </div>                 
