@@ -203,8 +203,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
                 $subscription->set_first_name( $payment->body->payment_source->paypal->name->given_name );
             }
 
-            if( isset( $payment->body->payment_source->paypal->name->sur_name ) && !empty( $payment->body->payment_source->paypal->name->sur_name ) ){
-                $subscription->set_last_name( $payment->body->payment_source->paypal->name->sur_name );
+            if( isset( $payment->body->payment_source->paypal->name->surname ) && !empty( $payment->body->payment_source->paypal->name->surname ) ){
+                $subscription->set_last_name( $payment->body->payment_source->paypal->name->surname );
             }
 
             $subscription->set_payment_source( 'paypal' ); // can be changed in future.

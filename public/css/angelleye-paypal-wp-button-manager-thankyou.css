@@ -99,6 +99,7 @@
     text-transform: uppercase;
     border: 1px solid #ddd;
     background: #f3f3f3;
+    margin-top: 0px;
 }
 .transaction-id, .item-name, .item-price, .shipping, .tax-amount, .total-amount, .transaction-date-id {
     margin: 0 0 1.41575em;
