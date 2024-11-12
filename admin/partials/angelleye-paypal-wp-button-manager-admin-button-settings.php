@@ -146,8 +146,8 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                         <div class="col-md-6">
                             <div class="form-pd">
                                 <div class="d-flex">
-                                    <label for="frequency_count"><?php _e('Subscription Management','angelleye-paypal-wp-button-manager'); ?> <?php _e("(Frequency Count)", "angelleye-paypal-wp-button-manager") ?></label>
-                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Specify the frequency count (greater than 0). For example, \'1\' entered here with \'month\' chosen on frequency will renew subscriptions monthly.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    <label for="frequency_count"><?php _e('Billing Cycle','angelleye-paypal-wp-button-manager'); ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('The number of recurring payments in the recurring interval.','angelleye-paypal-wp-button-manager'); ?></span></span>
                                 </div>
                                 <input type="number" min="1" name="frequency_count" id="frequency_count" class="form-control" value="<?php echo $button->get_frequency_count( 'edit' ); ?>" maxlength="100" required>
                             </div>
@@ -155,8 +155,8 @@ wp_nonce_field( 'paypal_button_settings', 'paypal_button_settings_nonce' );
                         <div class="col-md-6">
                             <div class="form-pd">
                                 <div class="d-flex">
-                                    <label for="frequency"><?php _e("Frequency", "angelleye-paypal-wp-button-manager") ?></label>
-                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('Specify the frequency. For example, \'1\' entered in frequency count with \'month\' chosen here will renew subscriptions monthly.','angelleye-paypal-wp-button-manager'); ?></span></span>
+                                    <label for="frequency"><?php _e("Billing Period", "angelleye-paypal-wp-button-manager") ?></label>
+                                    <span class="dashicons-before dashicons-info paypal_shortcode_info ml-1"><span class="tooltiptext"><?php _e('The recurring interval of its price, such as monthly, yearly, weekly, and so on.','angelleye-paypal-wp-button-manager'); ?></span></span>
                                 </div>
                                 <select name="frequency" id="frequency" class="form-control">
                                     <option value=""><?php _e('Please Select','angelleye-paypal-wp-button-manager'); ?></option>
