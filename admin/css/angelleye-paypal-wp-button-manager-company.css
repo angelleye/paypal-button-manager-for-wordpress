@@ -300,6 +300,16 @@ body{
     color: #219642;
     font-weight: bold;
 }
+.b-btn:not(.b-btn.active){
+   padding: 0px 23px;  
+}
+.b-btn svg:not(.b-btn.active svg){
+    width: 86px;
+    height: 57px;
+}
+.b-btn img:not(.b-btn.active img){
+    display: none;
+}
 @media(max-width:991px){
     .paypal-wp-manager-right,
     .paypal-wp-manager{

@@ -20,10 +20,10 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
         $this->live_merchant_id = ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_LIVE_PARTNER_MERCHANT_ID;
         $this->logger = new Angelleye_PayPal_WP_Button_Manager_Logger( 'ppcp-seller-onboard' );
         add_action( 'admin_menu', array( $this, 'admin_menu') );
-        add_action('admin_post_angelleye_paypal_wp_button_manager_admin_add_company', array( $this, 'create_company') );
         add_action('admin_post_angelleye_paypal_wp_button_manager_admin_added_company', array( $this, 'update_company') );
         add_action('admin_post_angelleye_paypal_wp_button_manager_admin_delete_company', array( $this, 'delete_company') );
         add_filter( 'set-screen-option', array($this, 'save_listing_page_option' ), 10, 3 );
+        add_action( 'wp_ajax_get_signup_url', array( $this, 'ajax_generate_signup_url') );
     }
 
     /**
@@ -71,12 +71,14 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
 
                 include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/angelleye-paypal-wp-button-manager-admin-company-information.php');
             } else {
-                $redirect_url = $this->get_signup_url( $company_id, $company->tracking_id, $company->country, $company->paypal_mode );
+                $redirect_url = $this->get_signup_url( $company->tracking_id, $company->paypal_mode );
                 
                 include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/angelleye-paypal-wp-button-manager-admin-company.php');
             }
         } else {
             if( isset( $_GET['type'] ) && $_GET['type'] == 'new' ){
+                $redirect_url = $this->get_signup_url( strtoupper( bin2hex( random_bytes(10) ) ) );
+
                 include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/angelleye-paypal-wp-button-manager-admin-company.php');
             } else {
                 $companies = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}angelleye_paypal_button_manager_companies" );
@@ -124,44 +126,19 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
     }
 
     /**
-     * Allows to create company
-     * 
-     * @return void
-     */
-    public function create_company(){
-        if( isset( $_POST['save_paypal_ac_type'] ) ){
-            global $wpdb;
-
-            $company_name = sanitize_text_field( $_POST['company_name'] );
-            $contact_name = sanitize_text_field( $_POST['contact_name'] );
-            $country = sanitize_text_field( $_POST['country'] );
-
-            if( isset( $_POST['paypal_sandbox'] ) ){
-                $paypal_mode = 'sandbox';
-            } else {
-                $paypal_mode = 'live';
-            }
-
-            $wpdb->insert( $wpdb->prefix . 'angelleye_paypal_button_manager_companies', array( 'company_name' => $company_name, 'paypal_person_name' => $contact_name, 'country' => $country, 'paypal_mode' => $paypal_mode, 'tracking_id' => strtoupper( bin2hex( random_bytes(10) ) ) ) );
-
-            $company_id = $wpdb->insert_id;
-            wp_redirect( admin_url('admin.php?page=' . self::$paypal_button_company_slug . '&type=new&company_id=' . $company_id ) );
-        }
-    }
-
-    /**
      * Saves the company information
      * 
      * @return void
      */
     public function update_company(){
-        if( isset( $_GET['merchantIdInPayPal'] ) && isset( $_GET['company_id'] ) ){
+        if( isset( $_GET['merchantIdInPayPal'] )){
             global $wpdb;
-            $company_id = esc_sql( $_GET['company_id'] );
             $merchant_id = esc_sql( $_GET['merchantIdInPayPal'] );
+            $response = $this->get_onboarding_status( $merchant_id, esc_sql( $_GET['mode'] ) );
 
-            $wpdb->update( $wpdb->prefix . 'angelleye_paypal_button_manager_companies', array( 'paypal_merchant_id' => $merchant_id ), array( 'ID' => $company_id ) );
-            wp_redirect( admin_url('admin.php?page=' . self::$paypal_button_company_slug . '&company_id=' . $company_id ) );
+            $wpdb->insert( $wpdb->prefix . 'angelleye_paypal_button_manager_companies', array( 'company_name' => $response['body']->legal_name, 'paypal_person_name' => $response['body']->legal_name, 'country' => $response['body']->country, 'paypal_mode' => esc_sql( $_GET['mode'] ), 'tracking_id' => $response['body']->tracking_id, 'paypal_merchant_id' => $response['body']->merchant_id, 'paypal_email' => $response['email'], 'products' => $response['products'] ) );
+
+            wp_redirect( admin_url('admin.php?page=' . self::$paypal_button_company_slug . '&company_id=' . $wpdb->insert_id ) );
         }
     }
 
@@ -186,35 +163,40 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
     }
 
     /**
+     * Provides the signup page url
+     * 
+     * @return void
+     * */
+    public function ajax_generate_signup_url(){
+        echo $this->get_signup_url( strtoupper( bin2hex( random_bytes(10) ) ), sanitize_text_field( $_GET['mode'] ) ) . '&displayMode=minibrowser';
+        die();
+    }
+
+    /**
      * Returns the paypal signup url
      * 
-     * @param int company_id id of the company
      * @param string tracking_id tracking id
      * @param string mode mode of paypal
      * 
      * @return mixed
      */
-    private function get_signup_url( $company_id, $tracking_id, $country=null, $mode='live' ){
+    private function get_signup_url($tracking_id, $mode='live' ){
         $testmode = 'sandbox' === $mode ? 'yes' : 'no';
         $products = array(
-            'PPCP'
+            'PPCP',
+            'ADVANCED_VAULTING'
         );
-        $capabilities = array();
-        if( $country == 'US' ){
-            $products[] = 'ADVANCED_VAULTING';
-            $capabilities[] = 'PAYPAL_WALLET_VAULTING_ADVANCED';
-        }
+        $capabilities = array(
+            'PAYPAL_WALLET_VAULTING_ADVANCED'
+        );
         $request_body = array(
             'testmode' => $testmode,
-            'return_url' => admin_url('admin-post.php?action=angelleye_paypal_wp_button_manager_admin_added_company&company_id=' . $company_id),
+            'return_url' => admin_url('admin-post.php?action=angelleye_paypal_wp_button_manager_admin_added_company&mode=' . $mode),
             'return_url_description' => __('Return to your shop', 'angelleye-paypal-wp-button-manager'),
             'products' => $products,
-            'tracking_id' => $tracking_id
+            'tracking_id' => $tracking_id,
+            'capabilities' => $capabilities,
         );
-
-        if( !empty( $capabilities ) ){
-            $request_body['capabilities'] = $capabilities;
-        }
 
         $request = array(
             'body' => json_encode( $request_body ),
@@ -326,7 +308,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Company {
             );
         }
 
-        $status = array( 'products' => $products, 'email' => $response->body->primary_email );
+        $status = array( 'products' => $products, 'email' => $response->body->primary_email, 'body' => $response->body );
         $this->logger->info( 'Onboarding status check successful', $status );
         return $status;
     }

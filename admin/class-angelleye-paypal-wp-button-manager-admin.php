@@ -73,6 +73,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 	{
 		if (isset($_GET['page']) && $_GET['page'] == Angelleye_Paypal_WP_Button_Manager_Company::$paypal_button_company_slug) {
 			wp_enqueue_script($this->plugin_name, ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/angelleye-paypal-wp-button-manager-company.js', array('jquery'), $this->version, true);
+			wp_localize_script($this->plugin_name, 'angelleye_company', array('ajaxurl' => admin_url( 'admin-ajax.php'), 'error_text' => __('There is some issue generating the signup URL. please try again later.','angelleye-paypal-wp-button-manager') ) );
 		}
 
 		if ((isset($_GET['post_type']) && $_GET['post_type'] == Angelleye_Paypal_Wp_Button_Manager_Post::$post_type) || (isset($_GET['post']) && get_post_type(sanitize_text_field($_GET['post'])) == Angelleye_Paypal_Wp_Button_Manager_Post::$post_type)) {
