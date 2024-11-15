@@ -21,6 +21,7 @@
     max-width: 767px;
     width: 100%;
     margin: auto;
+    line-height: 52px;
 }
 .order-message.order-failed .message{
     border: 2px dotted #d50505;
@@ -28,7 +29,9 @@
 }
 .order-message.order-success .message {
     border: 2px dotted #75b33a;
-    margin-bottom: 80px;
+}
+.order-message .message {
+    margin-bottom: 30px;
 }
 .order-message.order-success .message:before {
     content: '';

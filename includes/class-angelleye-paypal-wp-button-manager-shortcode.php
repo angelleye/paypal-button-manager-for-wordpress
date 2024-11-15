@@ -76,7 +76,26 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
             'merchant_id' => $button->get_company_merchant_id(),
             'amount' => $button->get_total(),
             'type' => $button->get_button_type(),
-            'general_error' => __('Something went wrong on our end. We apologize for any inconvenience this may have caused. Please try again later.','angelleye-paypal-wp-button-manager')
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'please_select' => __('Please Select State', 'angelleye-paypal-wp-button-manager'),
+            'general_error' => __('Something went wrong on our end. We apologize for any inconvenience this may have caused. Please try again later.','angelleye-paypal-wp-button-manager'),
+            'first_name_error' => __("First name is required.",'angelleye-paypal-wp-button-manager'),
+            'last_name_error' => __("Last name is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_email_error' => __("A valid email address is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_phone_error' => __("A valid phone number is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_address_1_error' => __("Billing address line 1 is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_city_error' => __("Billing city is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_country_error' => __("A valid country code (2 characters) is required.",'angelleye-paypal-wp-button-manager'),
+            'billing_post_code_error' => __("A valid billing postal code is required.",'angelleye-paypal-wp-button-manager'),
+            'shipping_address_1_error' => __("Shipping address line 1 is required.",'angelleye-paypal-wp-button-manager'),
+            'shipping_city_error' => __("Shipping city is required.",'angelleye-paypal-wp-button-manager'),
+            'shipping_country_error' => __("A valid shipping country code (2 characters) is required.",'angelleye-paypal-wp-button-manager'),
+            'shipping_postcode_error' => __("A valid shipping postal code is required.",'angelleye-paypal-wp-button-manager'),
+            'invalid_card' => __("The card number entered is invalid. Please check and try again.", 'angelleye-paypal-wp-button-manager'),
+            'invalid_expiry' => __("The card has expired. Please use a valid card.",'angelleye-paypal-wp-button-manager'),
+            'invalid_cvv' => __("The CVV code entered is incorrect. Please try again.",'angelleye-paypal-wp-button-manager'),
+            'ineligible_card' => __("This card is not supported.",'angelleye-paypal-wp-button-manager'),
+            'invalid_name' => __("The card name is invalid.",'angelleye-paypal-wp-button-manager')
         ));
         
         $hidden_method = $button->get_hide_funding_method();
@@ -85,7 +104,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
         } else {
             $hidden = '';
         }
-        wp_enqueue_script( $this->plugin_name . '-paypal-sdk', 'https://www.paypal.com/sdk/js?&client-id=' . ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_SANDBOX_PARTNER_CLIENT_ID . $hidden . '&enable-funding=venmo,paylater&merchant-id=' . $button->get_company_merchant_id() . '&is_sandbox=' . $button->is_company_test_mode() , array(), null);
+        
+        wp_enqueue_script( $this->plugin_name . '-paypal-sdk', 'https://www.paypal.com/sdk/js?&client-id=' . ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_SANDBOX_PARTNER_CLIENT_ID . $hidden . '&components=buttons,card-fields&merchant-id=' . $button->get_company_merchant_id() . '&is_sandbox=' . $button->is_company_test_mode() , array(), null);
         wp_enqueue_script( $this->plugin_name . "-frontend-button");
         wp_enqueue_style( $this->plugin_name . "-frontend-button");
         
@@ -116,12 +136,12 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
      * 
      * @return string
      */
-    public function ppcp_clean_url( $tag, $handle ){
-        if( is_admin() ){
+    public function ppcp_clean_url( $tag, $handle ) {
+        if( is_admin() ) {
             return $tag;
         }
         
-        if( $this->plugin_name . '-paypal-sdk' === $handle ){
+        if( $this->plugin_name . '-paypal-sdk' === $handle ) {
             $urlPattern = '/<script[^>]*src=["\'](https:\/\/www\.paypal\.com\/sdk\/js\?.*?)["\']/';
             if (preg_match($urlPattern, $tag, $matches)) {
                 $url = htmlspecialchars_decode($matches[1]);
@@ -130,15 +150,21 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
                 $query = parse_url($url);
                 parse_str($query['query'], $parameters);
                 $sandbox = $parameters['is_sandbox'];
-
-                unset( $parameters['is_sandbox'] );
-                $newQueryString = http_build_query($parameters);
-
+                
+                unset($parameters['is_sandbox']);
+                
+                // Manually build the query string to keep commas intact
+                $newQueryString = '';
+                foreach ($parameters as $key => $value) {
+                    $newQueryString .= $key . '=' . $value . '&';
+                }
+                $newQueryString = rtrim($newQueryString, '&');
+                
                 $modifiedUrl = $query['scheme'] . '://' . $query['host'] . $query['path'];
                 if (!empty($newQueryString)) {
                     $modifiedUrl .= '?' . $newQueryString;
                 }
-
+                
                 $tag = '<script src="' . htmlspecialchars($modifiedUrl) . '"';
                 if (isset($query['fragment'])) {
                     $tag .= ' id="' . htmlspecialchars($query['fragment']) . '"';
@@ -147,7 +173,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
             }
             $id_token = $this->generate_id_token( $parameters['merchant-id'], $sandbox );
 
-            if( is_wp_error( $id_token ) ){
+            if( is_wp_error( $id_token ) ) {
                 return;
             }
 
@@ -156,6 +182,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Shortcode{
 
         return $tag;
     }
+
 
     /**
      * Generates the ID token

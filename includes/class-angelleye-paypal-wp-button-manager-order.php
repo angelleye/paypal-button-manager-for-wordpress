@@ -12,6 +12,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
 		add_action('rest_api_init', array( $this, 'register_order_create_route' ) );
         add_action( 'init', array( $this, 'register_custom_endpoints' ) );
         add_action( 'template_redirect', array( $this, 'custom_endpoint_templates' ) );
+        add_action('wp_ajax_get_state', array( $this, 'get_state') );
+        add_action('wp_ajax_nopriv_get_state', array( $this, 'get_state') );
 	}
  	
     /**
@@ -46,7 +48,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
             if( is_wp_error( $payment['payment'] ) ){
                 wp_redirect( get_site_url() . '/angelleye-order-received?success=false&message=' . $payment['payment']->get_error_message() );
             } else {
-                wp_redirect( get_site_url() . '/angelleye-order-received?success=true&order_id=' . $payment['payment']->body->id . '&button_id=' . $payment['button_id'] );
+                wp_redirect( get_site_url() . '/angelleye-order-received?success=true&order_id=' . $payment['payment']->body->id . '&button_id=' . $payment['button_id'] . '&subscription=' . $payment['subscription'] . '&vaulted=' . $payment['vaulted'] );
             }
             exit;
         }
@@ -58,6 +60,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
             } else {
                 $order_id = sanitize_text_field( $_GET['order_id'] );
                 $button_id = sanitize_text_field( $_GET['button_id'] );
+                $subscription =  ( isset( $_GET['subscription'] ) && $_GET['subscription'] == 'true' ) ? true : false;
+                $vaulted =  ( isset( $_GET['vaulted'] ) && $_GET['vaulted'] == 'true' ) ? true : false;
 
                 $button = new Angelleye_Paypal_Wp_Button_Manager_Button( $button_id );
             }
@@ -76,6 +80,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
     public function create_order(WP_REST_Request $request){
     	$params = $request->get_body();
         $params = json_decode( $params );
+
         if( !isset( $params->button_id ) || empty( $params->button_id ) ){
             return rest_ensure_response( array('status' => 'Failed', 'message' => __('Button ID is required field','angelleye-paypal-wp-button-manager') ) );
         }
@@ -101,6 +106,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
                     'items' => array(
                         array(
                             'name' => $button->get_item_name(),
+                            'sku' => $button->get_item_id(),
                             'quantity' => 1,
                             'unit_amount' => array(
                                 'currency_code' => $button->get_currency(),
@@ -163,6 +169,65 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
             );
         }
 
+        if (!empty($params->shipping_address)) {
+            $paypal_body['purchase_units'][0]['shipping'] = array(
+                'name' => array(
+                    'full_name' => $params->payer->first_name . ' ' . $params->payer->last_name
+                ),
+                'address' => array(
+                    'address_line_1' => $params->shipping_address->line1 ?? '',
+                    'address_line_2' => $params->shipping_address->line2 ?? '',
+                    'admin_area_1' => $params->shipping_address->state ?? '',
+                    'admin_area_2' => $params->shipping_address->city ?? '',
+                    'postal_code' => $params->shipping_address->postal_code ?? '',
+                    'country_code' => $params->shipping_address->country ?? ''
+                )
+            );
+        } else {
+            if (!empty($params->billing_address)) {
+                $paypal_body['purchase_units'][0]['shipping'] = array(
+                    'name' => array(
+                        'full_name' => $params->payer->first_name . ' ' . $params->payer->last_name
+                    ),
+                    'address' => array(
+                        'address_line_1' => $params->billing_address->addressLine1 ?? '',
+                        'address_line_2' => $params->billing_address->addressLine2 ?? '',
+                        'admin_area_1' => $params->billing_address->adminArea1 ?? '',
+                        'admin_area_2' => $params->billing_address->adminArea2 ?? '',
+                        'postal_code' => $params->billing_address->postalCode ?? '',
+                        'country_code' => $params->billing_address->countryCode ?? ''
+                    )
+                );
+            }
+        }
+
+        if( !empty($params->payer) ){
+            $paypal_body['payer'] = array(
+                'name' => array(
+                    'given_name' => $params->payer->first_name ?? '',
+                    'surname' => $params->payer->last_name ?? ''
+                ),
+                'email_address' => $params->payer->email ?? '',
+                'phone' => array(
+                    'phone_type' => 'MOBILE',
+                    'phone_number' => array(
+                        'national_number' => $params->payer->phone ?? ''
+                    )
+                ),
+            );
+        }
+
+        if (!empty($params->billing_address)) {
+            $paypal_body['payer']['address'] = array(
+                'address_line_1' => $params->billing_address->addressLine1 ?? '',
+                'address_line_2' => $params->billing_address->addressLine2 ?? '',
+                'admin_area_1' => $params->billing_address->adminArea1 ?? '',
+                'admin_area_2' => $params->billing_address->adminArea2 ?? '',
+                'postal_code' => $params->billing_address->postalCode ?? '',
+                'country_code' => $params->billing_address->countryCode ?? ''
+            );
+        }
+
         $api->set_body( $paypal_body );
         $api->set_action('create_order');
         $payment = $api->submit();
@@ -194,7 +259,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
         $api->set_paypal_url( $paypal_order_id . '/capture', true );
         $payment = $api->submit();
 
-        if( $button->get_button_type() == 'subscription' ){
+        if( $button->get_button_type() == 'subscription' && isset( $payment->body->payment_source->paypal->attributes->vault->id ) ){
             $subscription = new Angelleye_Paypal_Wp_Button_Manager_Subscription();
             $subscription->set_button_id( $button_id );
             $subscription->set_user_id( get_current_user_id() );
@@ -215,6 +280,16 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
                 return array( 'payment' => $subscription_id, 'button_id' => $button_id );
             }
         }
-        return array( 'payment' => $payment, 'button_id' => $button_id );
+        return array( 'payment' => $payment, 'button_id' => $button_id, 'subscription' => $button->get_button_type() == 'subscription' ? 'true' : 'false', 'vaulted' => isset( $payment->body->payment_source->paypal->attributes->vault->id ) ? 'true' : 'false' );
+    }
+
+    /**
+     * Allows to get the states
+     * 
+     * @return void
+     */
+    public function get_state(){
+        echo json_encode( angelleye_payapl_wp_button_manager_get_states( esc_sql( $_REQUEST['country'] ) ) );
+        die();
     }
 }

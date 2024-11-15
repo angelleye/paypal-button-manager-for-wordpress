@@ -1,8 +1,15 @@
 <?php
 get_header();
 
-?><div class="thank-you-page order-message order-<?php echo $success ? 'success' : 'failed'; ?>">
-    <div class="message"><?php echo $success ? __('Your order received successfully.','angelleye-paypal-wp-button-manager') : $message; ?></div><?php
+?><div class="thank-you-page">
+    <div class="order-message order-<?php echo $success ? 'success' : 'failed'; ?>">
+        <div class="message"><?php echo $success ? __('Your order received successfully.','angelleye-paypal-wp-button-manager') : $message; ?></div>
+    </div><?php
+    if( $subscription && !$vaulted ){
+        ?><div class="order-message order-failed">
+            <div class="message"><?php _e('Subscription could not be setup due to PayPal issue.','angelleye-paypal-wp-button-manager'); ?></div>
+        </div><?php
+    }
     if( $success ){
         $total_amount = $button->get_total();
         ?><div class="order-details-top">

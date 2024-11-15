@@ -96,7 +96,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 			);
 			wp_enqueue_script($this->plugin_name . '-select2');
 
-			wp_enqueue_script($this->plugin_name . '-paypal-sdk', 'https://www.paypal.com/sdk/js?&client-id=' . ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_SANDBOX_PARTNER_CLIENT_ID . '&enable-funding=venmo,paylater' . $hide_method, array(), null);
+			wp_enqueue_script($this->plugin_name . '-paypal-sdk', 'https://www.paypal.com/sdk/js?&client-id=' . ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_SANDBOX_PARTNER_CLIENT_ID . '&components=buttons,card-fields&enable-funding=credit,venmo,paylater' . $hide_method, array(), null);
 
 			wp_enqueue_media();
 			wp_register_script($this->plugin_name . '-button', ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_URL . 'admin/js/angelleye-paypal-wp-button-manager-paypal-button.js', array($this->plugin_name . '-paypal-sdk', 'jquery'), '1.0.0');

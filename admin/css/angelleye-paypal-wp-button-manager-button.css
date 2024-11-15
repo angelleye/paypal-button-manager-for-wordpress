@@ -631,6 +631,10 @@ p.total-amount {
     font-weight: 500;
     border: solid 2px #2271b11a !important;
 }
+#select2-wbp-button-hide-funding-container + .select2-search .select2-search__field{
+    top: -9px;
+    position: relative;  
+}
 @media screen and (max-width: 1525px) {
     .wp-picker-clear {
         margin: 10px 10px !important;
