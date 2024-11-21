@@ -157,6 +157,11 @@ jQuery(function ($) {
         $('#paypal_buttons_image_id').val('');
         $(this).hide();
     });
+
+    $('.toggle_editor').on('click',function(){
+        $(this).text( $('.template-code').is(':visible') ? angelleye_paypal_wp_button_manager_admin_paypal_button.view_template : angelleye_paypal_wp_button_manager_admin_paypal_button.hide_template );
+        $('.template-code').fadeToggle();
+    });
 });
 
 jQuery(document).on('change', '#wbp-button-layout', function () {

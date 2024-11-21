@@ -114,7 +114,9 @@ class Angelleye_Paypal_Wp_Button_Manager_Admin
 					'delete_caution_wait_message' => __('Please Wait', 'angelleye-paypal-wp-button-manager'),
 					'ajaxurl' => admin_url('admin-ajax.php'),
 					'media_title' => __('Select or Upload Image','angelleye-paypal-wp-button-manager'),
-					'media_button_text' => __('Use these image', 'angelleye-paypal-wp-button-manager')
+					'media_button_text' => __('Use these image', 'angelleye-paypal-wp-button-manager'),
+					'view_template' => __('View template','angelleye-paypal-wp-button-manager'),
+					'hide_template' => __('Hide template','angelleye-paypal-wp-button-manager'),
 				)
 			);
 			wp_enqueue_script($this->plugin_name . '-button');

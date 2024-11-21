@@ -48,6 +48,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
             if( is_wp_error( $payment['payment'] ) ){
                 wp_redirect( get_site_url() . '/angelleye-order-received?success=false&message=' . $payment['payment']->get_error_message() );
             } else {
+                $this->send_emails( $payment['button_id'], $payment['payment'] );
                 wp_redirect( get_site_url() . '/angelleye-order-received?success=true&order_id=' . $payment['payment']->body->id . '&button_id=' . $payment['button_id'] . '&subscription=' . $payment['subscription'] . '&vaulted=' . $payment['vaulted'] );
             }
             exit;
@@ -291,5 +292,71 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
     public function get_state(){
         echo json_encode( angelleye_payapl_wp_button_manager_get_states( esc_sql( $_REQUEST['country'] ) ) );
         die();
+    }
+
+    /**
+     * Sends the emails
+     * 
+     * @param button_id     int     Button ID of the order
+     * @param order         object  Payment object
+     * 
+     * @return void
+     * */
+    public function send_emails( $button_id, $order ){
+        $text_color = get_option('angelleye_paypal_wp_button_manager_admin_email_body_text_color','#000');
+        $background_color = get_option('angelleye_paypal_wp_button_manager_admin_email_body_background_color','#2271b1');
+
+        $order_number = $order->body->id;
+        $order_date = date('F j, Y', strtotime( $order->body->create_time ) );
+        $site_url = get_site_url();
+
+        if (isset($order->body->payer) && isset($order->body->payer->name)) {
+            $customer_name = trim(($order->body->payer->name->given_name ?? '') . ' ' . ($order->body->payer->name->surname ?? ''));
+        } else {
+            $customer_name = '';
+        }
+
+        $button = new Angelleye_Paypal_Wp_Button_Manager_Button( $button_id );
+        $tax = !empty( $button->get_tax_rate() ) ? $button->get_tax_total() : 0;
+
+        $from_name = get_option( 'angelleye_paypal_wp_button_manager_admin_email_from_name', __('AngellEye PayPal Button Manager', 'angelleye-paypal-wp-button-manager') );
+        $admin_email = get_option( 'admin_email');
+        $from_address = get_option('angelleye_paypal_wp_button_manager_admin_email_from_email', $admin_email );
+        if( empty( $from_address ) ){
+            $from_address = $admin_email;
+        }
+
+        $headers = array('Content-Type: text/html; charset=UTF-8', "From: $from_name <$from_address>");
+
+        foreach( Angelleye_Paypal_Wp_Button_Manager_Settings::get_emails() as $email ){
+            if( get_option( $email->base_slug . '_enable' ) == 'yes' ){
+                if( $email->sent_to_customer ){
+                    if (!property_exists($order->body, 'payer') || empty($order->body->payer->email_address)) {
+                        continue;
+                    } else {
+                        $send_mail_to = $order->body->payer->email_address;
+                    }
+                } else {
+                    $send_mail_to = get_option( $email->base_slug . '_recipients' );
+                }
+
+                
+                $subject = get_option( $email->base_slug . '_subject' );
+                if( empty( $subject ) ){
+                    $subject = __('New Order: #{order_number}', 'angelleye-paypal-wp-button-manager');
+                }
+                $subject = str_replace( array('{order_date}', '{order_number}', '{site_url}'), array( $order_date, $order_number, $site_url), $subject );
+
+                ob_start();
+                if( $email->overridden_template ){
+                    include $email->overridden_template_path;
+                } else {
+                    include $email->template_path;
+                }
+                $html = ob_get_clean();
+
+                wp_mail( $send_mail_to, $subject, $html, $headers );
+            }
+        }
     }
 }

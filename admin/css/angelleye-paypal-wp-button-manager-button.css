@@ -24,7 +24,9 @@
 .paypal_shortcode_info{
     position: relative;
 }
-
+.order-list .dashicons-info:hover .tooltiptext {
+    visibility: visible;
+}
 .paypal-button-generator-form .row>* {
     width: 100%;
     max-width: 100%;
@@ -379,7 +381,7 @@
     cursor: pointer;
 }
 
-.paypal_shortcode_copy .tooltiptext, .paypal_shortcode_info .tooltiptext {
+.paypal_shortcode_copy .tooltiptext, .paypal_shortcode_info .tooltiptext, .email-settings-table tr td .tooltiptext {
     visibility: hidden;
     width: 107px;
     background-color: black;
@@ -634,6 +636,385 @@ p.total-amount {
 #select2-wbp-button-hide-funding-container + .select2-search .select2-search__field{
     top: -9px;
     position: relative;  
+}
+
+.tab-container {
+    width: 100%;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.tab-container input[type="radio"] {
+    display: none;
+}
+.tab {
+    display: inline-block;
+    width: 10%;
+    text-align: center;
+    padding: 15px 0;
+    background: #007BFF;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.tab:hover {
+    background: #0056b3;
+}
+.tab-container input[type="radio"]:checked + .tab {
+    background: #0056b3;
+    box-shadow: inset 0 -3px 0 #fff;
+}
+.tab-content {
+    padding: 20px;
+}
+.tab-pane {
+    display: none;
+}
+
+.tab-container input[type="radio"]:nth-of-type(1):checked ~ .tab-content #email_content{
+    display: block;
+}
+.email-settings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 2px solid #E2E8F0;
+}
+.email-settings-table thead tr {
+    border-bottom: 2px solid #E2E8F0;
+}
+.email-settings-table th, .email-settings-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+.email-settings-table th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    color: #212B36;
+    font-size: 16px;
+}
+.email-settings-table th:first-child {
+    width: 1em;
+}
+.email-checkbox-settings input[type=checkbox]:checked::before {
+    margin:0px !important;
+}
+.email-checkbox-settings input {
+    width: 28px !important;
+    min-height: 25px !important;
+}
+.help-tip-before:before {
+    font-family: dashicons;
+    display: inline-block;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    speak: never;
+    text-decoration: inherit;
+    text-transform: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    vertical-align: top;
+    text-align: center;
+    transition: color .1s ease-in;
+}
+.help-tip-info:before {
+    content: "\f348";
+}
+.help-tip-info {
+    position: relative;
+}
+.email-settings-table tr td a {
+    text-decoration: none;
+    color: #3c434a;
+}
+.order-list .tooltiptext {
+    visibility: hidden;
+    width: 107px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    transform: translateX(-50%);
+}
+.help-tip-info:hover .tooltiptext{
+    visibility: visible;
+}
+button.manage-btn {
+    background: #f6f7f7 !important;
+    color: #2271b1 !important;
+    height: auto !important;
+    font-weight: 500;
+    border: solid 2px #2271b11a !important;
+    border-radius: 5px;
+    display: block;
+    padding: 8px 30px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+.email-settings-table td:last-child {
+    float: inline-end;
+}
+.email-settings-table tr td {
+    font-size: 14px;
+}
+.email-options label, .email-template label, .order-list label{
+    color: #212B36;
+    padding-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+}
+.email-options label{
+    width: 8%;
+    text-align: left;
+}
+.email-template label{
+    width: 13%;
+    text-align: left;
+}
+.order-list label{
+    width: 12%;
+    text-align: left;
+}
+.email-options input, .email-template input, .order-list input{
+    border: solid 2px #E2E8F0 !important;
+    width: 50%;
+    color: #64748B;
+    font-weight: 400;
+    background: #e2e8f000;
+    border-radius: 0px;
+    min-height: 30px;
+    line-height: 2;
+    font-size: 14px;
+    padding: 4px 10px;
+    background: #fff;
+}
+.email-settings-table tr td .manage-btn {
+    text-decoration: none;
+    color: #3c434a;
+    font-weight: 500;
+    border: solid 2px #2271b11a !important;
+    font-size: 14px;
+    padding: 8px 30px;
+    display: inline-block;
+}
+.email-template h2, .email-options h2, .store-insights h2, .email-title {
+    font-size: 1.25rem;
+}
+.form-list, .order-list {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+.order-list .dashicons-info {
+    margin-left: -30px;
+    padding-right: 10px;
+}
+.form-list .sub-title, .order-list .sub-title{
+    color: #212B36;
+    padding-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+    width: 13%;
+    text-align: left;
+}
+.order-list .sub-title{
+    width: 12%;
+    text-align: left;
+}
+.form-list .checkbox, .order-list .checkbox {
+    font-size: 16px;
+    line-height: 20px;
+    color: #5a5a5a;
+}
+.form-list .checkbox input, .order-list .checkbox input {
+    border: solid 1px #a5bbd8 !important;
+    margin: 0;
+    margin-right: 5px;
+    padding: 0px !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 0px;
+    display: inline-block;
+}
+.text-btn {
+    background: #333A48;
+    font-weight: 500;
+    color: #ffffff;
+}
+.forminp-color {
+    display: flex;
+    gap: 8px;
+}
+.form-list textarea, .order-list textarea {
+    width: 400px;
+    height: 75px;
+    border: solid 2px #E2E8F0 !important;
+    font-size: 14px;
+    padding: 4px 10px;
+    color: #000;
+}
+.forminp-color #base_color{
+    width: 30%;
+    padding: 0 2px;
+    min-height: 40px;
+}
+.status-disabled, .status-enabled, .status-manual {
+    font-size: 24px;
+    display: block;
+    text-indent: -9999px;
+    position: relative;
+    height: 1em;
+    width: 1em;
+}
+span.status-enabled:hover {
+    cursor: help;
+}
+.status-enabled::before {
+    font-family: dashicons;
+    speak: never;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    margin: 0;
+    text-indent: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    content: "\f12a";
+   color: #2271b1;
+}
+.status-disabled::before {
+    font-family: dashicons;
+    speak: never;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    margin: 0;
+    text-indent: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    content: "\f335";
+    color: #fffcfc;
+    background-color: #cbcbcb;
+    border-radius: 20px;
+}
+.email-options .form-list label {
+    width: 13%;
+}
+.email-settings-table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+button.save-btn {
+    color: #fff;
+    background: #2271b1;
+    border: 0;
+    padding: 15px 24px;
+    font-size: 16px;
+    cursor: pointer;
+}
+a.return-icon {
+    text-decoration: none;
+    outline: none;
+    border: 0;
+    margin-left: 10px;
+}
+.custom-text{
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #4a4a4a;
+}
+.checkbox-list .checkbox {
+    width: 50%;
+}
+.checkbox-list .checkbox input {
+    min-height: 0;
+}
+.form-list .checkbox input[type=checkbox]:checked::before, .checkbox-list .checkbox input[type=checkbox]:checked::before {
+    margin: -1px 0px 1px -3px;
+}
+.order-list select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.order-list select:focus {
+    outline: none;
+    border-color: #0073e6;
+    box-shadow: 0 0 5px rgba(0, 115, 230, 0.5);
+}
+.html-template-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+.html-template-list p {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #4a4a4a;
+}
+.html-template .button {
+    background: #f6f7f7 !important;
+    color: #2271b1 !important;
+    height: auto !important;
+    font-weight: 500;
+    border: solid 2px #2271b11a !important;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 8px 30px;
+}
+.html-template {
+    display: flex;
+    gap: 15px;
+}
+.template-code {
+    width: 100%;
+    min-height: 60vh;
+    height: calc(100vh - 295px);
+    border: 1px solid #dcdcde;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.form-list .button-small.wp-picker-clear {
+    width: 100%;
+    margin-left: 0px !important;
 }
 @media screen and (max-width: 1525px) {
     .wp-picker-clear {

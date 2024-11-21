@@ -181,6 +181,23 @@ class Angelleye_Paypal_Wp_Button_Manager {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-angelleye-paypal-wp-button-manager-subscription-renewal.php';
 		new Angelleye_Paypal_Wp_Button_Manager_Subscription_Renewal();
 
+		/**
+		 * The class responsible for settings.
+		 * */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-angelleye-paypal-wp-button-manager-settings.php';
+		new Angelleye_Paypal_Wp_Button_Manager_Settings();
+
+		/**
+		 * The class responsible for emails.
+		 * */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/email/class-angelleye-paypal-wp-button-manager-order.php';
+		
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/email/class-angelleye-paypal-wp-button-manager-new-order.php';
+		Angelleye_Paypal_Wp_Button_Manager_New_Order_Email::get_instance();
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/email/class-angelleye-paypal-wp-button-manager-processing-order.php';
+		Angelleye_Paypal_Wp_Button_Manager_Processing_Order_Email::get_instance();
+
 		$this->loader = new Angelleye_Paypal_Wp_Button_Manager_Loader();
 
 	}
