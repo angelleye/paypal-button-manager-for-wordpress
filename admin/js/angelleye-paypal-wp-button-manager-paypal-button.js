@@ -179,6 +179,11 @@ jQuery(document).on('change', '#item_price_currency', function () {
 
 jQuery(document).on('change', '#button_type', buttonFields);
 
+jQuery(document).on('change', 'input[name="tabs"]', function(){
+    jQuery('.tab-pane').hide();
+    jQuery(`#${jQuery(this).data('content')}`).show();
+});
+
 function buttonFields() {
     if (jQuery('#button_type').val() == 'subscription') {
         jQuery(".subscription-settings").show();

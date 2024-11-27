@@ -58,6 +58,8 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
             $success = ( isset( $_GET['success'] ) && $_GET['success'] == 'true' ) ? true : false;
             if( !$success ){
                 $message = $_GET['message'];
+                $subscription = false;
+                $vaulted = false;
             } else {
                 $order_id = sanitize_text_field( $_GET['order_id'] );
                 $button_id = sanitize_text_field( $_GET['button_id'] );
@@ -66,7 +68,13 @@ class Angelleye_Paypal_Wp_Button_Manager_Order{
 
                 $button = new Angelleye_Paypal_Wp_Button_Manager_Button( $button_id );
             }
-            include( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH . '/public/partials/angelleye-paypal-wp-button-manager-public-thankyou.php' );
+
+            $template = Angelleye_Paypal_Wp_Button_Manager_Receipt::get_instance();
+            if( $template->overridden_template ){
+                include $template->overridden_template_path;
+            } else {
+                include $template->template_path;
+            }
             exit;
         }
     }

@@ -198,6 +198,9 @@ class Angelleye_Paypal_Wp_Button_Manager {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/email/class-angelleye-paypal-wp-button-manager-processing-order.php';
 		Angelleye_Paypal_Wp_Button_Manager_Processing_Order_Email::get_instance();
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/order-receipt/class-angelleye-paypal-wp-button-manager-receipt.php';
+		Angelleye_Paypal_Wp_Button_Manager_Receipt::get_instance();
+
 		$this->loader = new Angelleye_Paypal_Wp_Button_Manager_Loader();
 
 	}

@@ -1,6 +1,8 @@
 <div class="tab-container">
-    <input type="radio" id="email_tab" name="tabs" checked>
+    <input type="radio" id="email_tab" name="tabs" checked data-content="email_content">
     <label for="email_tab" class="tab"><?php _e('Emails','angelleye-paypal-wp-button-manager'); ?></label>
+    <input type="radio" id="order_receipt" name="tabs" data-content="order_receipt_content">
+    <label for="order_receipt" class="tab"><?php _e('Order Receipt','angelleye-paypal-wp-button-manager'); ?></label>
 
     <div class="tab-content">
         <div class="tab-pane" id="email_content">
@@ -60,5 +62,9 @@
                 </form>
             </div>
         </div>
+        <div class="tab-pane" id="order_receipt_content"><?php 
+            $settings = Angelleye_Paypal_Wp_Button_Manager_Receipt::get_instance();
+            $settings->load_template();
+        ?></div>
     </div>
 </div>

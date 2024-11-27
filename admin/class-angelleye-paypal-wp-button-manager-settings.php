@@ -41,7 +41,7 @@ class Angelleye_Paypal_Wp_Button_Manager_Settings {
     	$emails = self::get_emails();
 
     	if( !isset( $_GET['section'] ) ){
-	    	include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/settings/angelleye-paypal-wp-button-manager-admin-email.php');
+	    	include_once( ANGELLEYE_PAYPAL_WP_BUTTON_MANAGER_PLUGIN_PATH .'/admin/partials/settings/angelleye-paypal-wp-button-manager-admin-settings.php');
     	} else {
     		foreach( $emails as $email ){
     			if( $email->base_slug == $_GET['section'] ){
